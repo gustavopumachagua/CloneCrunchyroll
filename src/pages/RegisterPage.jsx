@@ -1,15 +1,16 @@
-const CreateAccount = () => {
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+
+const RegisterPage = () => {
+  useEffect(() => {
+    // Llevar el scroll al inicio de la página
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white">
+    <div className="min-h-screen flex items-center justify-center bg-black text-white py-20">
       {/* Contenedor del formulario */}
       <div className="w-full max-w-md bg-gray-900 rounded-lg shadow-lg p-6 relative">
-        {/* Gato decorativo */}
-        <div className="absolute -top-6 right-6">
-          <span className="text-xl" role="img" aria-label="cat">
-            🐱
-          </span>
-        </div>
-
         {/* Título */}
         <h1 className="text-2xl font-bold text-center mb-6">Crear Cuenta</h1>
 
@@ -97,15 +98,15 @@ const CreateAccount = () => {
         {/* Enlace para iniciar sesión */}
         <p className="text-center text-sm text-gray-400 mt-6">
           ¿Ya tienes una cuenta?{" "}
-          <a
-            href="#"
+          <Link
+            to="/acceder"
             className="text-orange-500 underline hover:text-orange-400">
             ACCEDER
-          </a>
+          </Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default CreateAccount;
+export default RegisterPage;

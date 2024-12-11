@@ -36,7 +36,7 @@ const Navigation = () => {
         },
       },
     },
-    { name: "Juegos", dropdown: [] },
+    { name: "Juegos", dropdown: ["Juegos"] },
     {
       name: "Noticias",
       dropdown: [

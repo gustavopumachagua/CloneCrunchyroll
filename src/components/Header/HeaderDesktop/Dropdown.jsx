@@ -1,32 +1,27 @@
 import { useEffect, useRef } from "react";
 import { FaCaretDown } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Dropdown = ({ name, options, isActive, toggle, close }) => {
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
-  // Bloquear/desbloquear scroll cuando el Dropdown está abierto/cerrado
+  // Manejar bloqueo/desbloqueo de scroll
   useEffect(() => {
-    if (isActive) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto"; // Resetea overflow al desmontar
-    };
+    document.body.style.overflow = isActive ? "hidden" : "auto";
+    return () => (document.body.style.overflow = "auto");
   }, [isActive]);
 
+  // Manejo de clics fuera del Dropdown y presionar Escape
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        close(); // Cierra el Dropdown
+        close?.();
       }
     };
-
     const handleEscape = (event) => {
       if (event.key === "Escape") {
-        close(); // Cierra el Dropdown con la tecla Esc
+        close?.();
       }
     };
 
@@ -39,20 +34,79 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
     };
   }, [close]);
 
+  // Mapear géneros a IDs para redirección
+  const genreMap = {
+    Acción: 1,
+    Aventura: 2,
+    Comedia: 4,
+    Drama: 8,
+    Fantasía: 10,
+    Musical: 19,
+    Romance: 22,
+    "Ciencia Ficción": 24,
+    Seinen: 42,
+    Shoujo: 25,
+    Shounen: 27,
+    "Recuentos de la Vida": 36,
+    Deportes: 30,
+    Sobrenatural: 37,
+    Thriller: 41,
+  };
+
+  const handleOptionClick = (option) => {
+    if (option === "Todas las noticias") {
+      navigate("/NewsPage"); // Redirigir a la página de noticias
+    } else {
+      const genreId = genreMap[option];
+      if (genreId) {
+        navigate(`/genre/${genreId}`);
+      }
+      if (option === "Anime Awards") {
+        navigate("/AnimeAwards"); // Redirigir a la página de noticias
+      }
+      if (option === "Eventos y experiencias") {
+        navigate("/EventsAndExperiences"); // Redirigir a la página de noticias
+      }
+      if (option === "Popular") {
+        navigate("/PopularAnime"); // Redirigir a la página de noticias
+      }
+      if (option === "Novedades") {
+        navigate("/Novedades"); // Redirigir a la página de noticias
+      }
+      if (option === "Alfabético") {
+        navigate("/Alfabetico"); // Redirigir a la página de noticias
+      }
+      if (option === "Temporada de Simulcats") {
+        navigate("/SeasonalSimulcasts");
+      }
+      if (option === "Calendario de Lanzamientos") {
+        navigate("/ReleaseCalendar"); // Redirigir a la página de noticias
+      }
+      if (option === "Videos musicales y conciertos") {
+        navigate("/MusicVideos"); // Redirigir a la página de noticias
+      }
+      if (option === "Juegos") {
+        navigate("/AnimeGames"); // Redirigir a la página de noticias
+      } else {
+        alert(`Seleccionaste: ${option}`);
+      }
+    }
+    close?.(); // Cierra el Dropdown al seleccionar cualquier opción
+  };
+
   const showCaretIcon =
     name !== "Juegos" &&
     (Array.isArray(options) || options?.type === "two-columns");
 
   return (
     <>
-      {/* Fondo transparente (overlay) */}
+      {/* Fondo de overlay */}
       {isActive && (
         <div
-          className="fixed inset-0 bg-black/75 z-40 transition-opacity duration-300"
-          style={{ top: "4rem" }} // Ajusta la altura del header (ejemplo: 4rem para h-16)
+          className="fixed inset-0 bg-black/75 z-40"
+          style={{ top: "4rem" }}
           onClick={close}
-          aria-hidden="true" // Indica que este fondo no es interactivo para lectores de pantalla
-        ></div>
+          aria-hidden="true"></div>
       )}
 
       {/* Dropdown principal */}
@@ -62,33 +116,23 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
         role="menu"
         aria-haspopup="true"
         aria-expanded={isActive}>
-        {/* Botón para abrir/cerrar el menú */}
         <div
           onClick={toggle}
           className="flex items-center text-white hover:text-gray-300 cursor-pointer"
-          role="button"
-          aria-haspopup="true"
-          tabIndex={0} // Permite usar el teclado para activar el botón
-        >
+          tabIndex={0}>
           {name}
-          {showCaretIcon && (
-            <FaCaretDown className="ml-2" title="Menú desplegable" />
-          )}
+          {showCaretIcon && <FaCaretDown className="ml-2" />}
         </div>
 
-        {/* Menú desplegable */}
         {isActive && options && (
           <div
             className={`absolute left-0 mt-4 ${
               options.type === "two-columns" ? "w-[870px]" : "w-48"
-            } bg-gray-700 text-white rounded shadow-lg z-50 overflow-hidden transition-transform duration-300 transform ${
-              isActive ? "scale-100 opacity-100" : "scale-95 opacity-0"
-            }`}
+            } bg-gray-700 text-white rounded shadow-lg overflow-hidden`}
             role="menu">
-            {/* Caso para dos columnas */}
+            {/* Caso dos columnas */}
             {options.type === "two-columns" && (
               <div className="grid grid-cols-[250px_1fr] gap-x-8 p-4">
-                {/* Primera columna */}
                 <div
                   className="min-w-[200px] border-r border-gray-500 pr-4"
                   role="menuitem">
@@ -96,27 +140,21 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
                     {options.columns.left.map((option, index) => (
                       <li
                         key={index}
-                        className="px-4 py-2 hover:bg-gray-600 transition-colors cursor-pointer"
-                        tabIndex={0} // Hacer navegable por teclado
-                        role="menuitem"
-                        onClick={() => alert(`Seleccionaste ${option}`)} // Función de ejemplo
-                      >
+                        className="px-4 py-2 hover:bg-gray-600 cursor-pointer"
+                        onClick={() => handleOptionClick(option)}>
                         {option}
                       </li>
                     ))}
                   </ul>
                 </div>
-                {/* Segunda columna con título */}
                 <div className="min-w-[400px]">
                   <h3 className="text-sm font-semibold py-2 pb-4">GÉNEROS</h3>
-                  <ul className="grid grid-cols-3 gap-x-2 gap-y-2 text-sm">
+                  <ul className="grid grid-cols-3 gap-2 text-sm">
                     {options.columns.right.map((option, index) => (
                       <li
                         key={index}
-                        className="px-4 py-2 hover:bg-gray-600 transition-colors cursor-pointer"
-                        tabIndex={0}
-                        role="menuitem"
-                        onClick={() => alert(`Seleccionaste ${option}`)}>
+                        className="px-4 py-2 hover:bg-gray-600 cursor-pointer"
+                        onClick={() => handleOptionClick(option)}>
                         {option}
                       </li>
                     ))}
@@ -124,17 +162,14 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
                 </div>
               </div>
             )}
-
-            {/* Caso para menú simple */}
+            {/* Menú simple */}
             {Array.isArray(options) && (
               <ul>
                 {options.map((option, index) => (
                   <li
                     key={index}
-                    className="px-4 py-2 text-sm hover:bg-gray-600 transition-colors cursor-pointer"
-                    tabIndex={0}
-                    role="menuitem"
-                    onClick={() => alert(`Seleccionaste ${option}`)}>
+                    className="px-4 py-2 hover:bg-gray-600 cursor-pointer"
+                    onClick={() => handleOptionClick(option)}>
                     {option}
                   </li>
                 ))}

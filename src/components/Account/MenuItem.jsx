@@ -1,6 +1,6 @@
-const MenuItem = ({ title, description }) => {
+const MenuItem = ({ title, description, onClick }) => {
   return (
-    <div className="mb-6 group cursor-pointer">
+    <div className="mb-6 group cursor-pointer" onClick={onClick}>
       <h3 className="text-lg font-bold group-hover:text-yellow-400 transition duration-300">
         {title}
       </h3>

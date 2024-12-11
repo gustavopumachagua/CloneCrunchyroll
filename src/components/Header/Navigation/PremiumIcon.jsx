@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PremiumSVG from "../../../assets/icons/Premium.svg";
-import { PremiumButton } from "./index";
+import PremiumButton from "./PremiumButton";
 
 const PremiumTooltip = ({ isVisible }) => {
   return isVisible ? (
@@ -21,31 +21,20 @@ const PremiumTooltip = ({ isVisible }) => {
 const PremiumIcon = ({ showText = true }) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
-  const handleFocus = () => setIsTooltipVisible(true);
-  const handleBlur = () => setIsTooltipVisible(false);
-
   return (
     <div
       className="relative flex items-center space-x-2"
       onMouseEnter={() => setIsTooltipVisible(true)}
       onMouseLeave={() => setIsTooltipVisible(false)}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      tabIndex={0} // Hacer navegable con teclado
-    >
-      {/* Ícono Premium */}
+      tabIndex={0}>
       <img
         src={PremiumSVG}
         alt="Premium Icon"
         className="h-6 w-6 cursor-pointer"
         title="Premium"
       />
-
-      {/* Tooltip */}
       <PremiumTooltip isVisible={isTooltipVisible} />
-
-      {/* Botón opcional */}
-      {showText && <PremiumButton />}
+      {showText && <PremiumButton />} {/* Usar el botón actualizado */}
     </div>
   );
 };

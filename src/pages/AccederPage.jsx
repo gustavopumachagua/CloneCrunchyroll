@@ -1,6 +1,12 @@
-import React from "react";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
-const Login = () => {
+const AccederPage = () => {
+  useEffect(() => {
+    // Llevar el scroll al inicio de la página
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white">
       {/* Contenedor del formulario */}
@@ -58,15 +64,15 @@ const Login = () => {
         {/* Enlace para crear una cuenta */}
         <p className="text-center text-sm text-gray-400 mt-6">
           ¿No tienes cuenta?{" "}
-          <a
-            href="#"
+          <Link
+            to="/register"
             className="text-orange-500 underline hover:text-orange-400">
             CREAR UNA
-          </a>
+          </Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default AccederPage;

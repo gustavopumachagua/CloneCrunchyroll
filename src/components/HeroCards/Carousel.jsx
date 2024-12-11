@@ -80,7 +80,7 @@ const Carousel = ({ items }) => {
                   image={item.image}
                   title={item.title}
                   subtitle={item.subtitle}
-                  animeData={item} // Pasamos todos los datos del anime
+                  animeData={item.animeData || item} // Prioriza item.animeData si existe
                 />
               </div>
             ))}

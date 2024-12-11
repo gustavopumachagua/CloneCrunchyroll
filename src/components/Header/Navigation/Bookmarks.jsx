@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { FiBookmark } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const Bookmarks = () => {
+  const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
 
   const toggleBookmark = () => {
@@ -15,7 +17,11 @@ const Bookmarks = () => {
       aria-label="Agregar a Favoritos"
       aria-pressed={isActive}
       role="button">
-      <FiBookmark size={22} title="Favoritos" />
+      <FiBookmark
+        size={22}
+        title="Favoritos"
+        onClick={() => navigate("/acceder")}
+      />
     </button>
   );
 };
