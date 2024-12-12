@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FaApple, FaAndroid, FaDesktop } from "react-icons/fa";
+import aplicaciones from "../assets/image/aplicaciones.webp";
 
 const GetAppsSection = () => {
   useEffect(() => {
@@ -46,7 +47,7 @@ const GetAppsSection = () => {
         {/* Imagen principal */}
         <div className="mb-12">
           <img
-            src="https://via.placeholder.com/800x400"
+            src={aplicaciones}
             alt="Hazte con nuestras aplicaciones"
             className="rounded-lg shadow-md mx-auto w-full md:w-3/4 lg:w-1/2"
           />

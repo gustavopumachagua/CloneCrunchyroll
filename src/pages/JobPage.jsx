@@ -40,7 +40,7 @@ const JobPage = () => {
   ];
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen py-10 px-6">
+    <div className="bg-gray-900 text-white min-h-screen py-20 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Título */}
         <div className="text-center mb-10">

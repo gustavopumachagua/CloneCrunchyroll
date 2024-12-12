@@ -25,10 +25,14 @@ const AccountMenu = () => {
       <MenuItem
         title="Tarjeta regalo"
         description="¿Tienes una tarjeta regalo? Canjéala aquí."
+        onClick={() => navigate("/canjeartarjeta")}
       />
 
       {/* Botón de prueba gratuita */}
-      <PremiumButton />
+      <PremiumButton 
+      title="Premium"
+      onClick={() => navigate("/premium")}
+      />
     </div>
   );
 };

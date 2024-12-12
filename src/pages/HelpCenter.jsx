@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   FaQuestionCircle,
   FaEnvelope,
@@ -6,6 +6,7 @@ import {
   FaPhoneAlt,
   FaSearch,
 } from "react-icons/fa";
+import helpcenter from "../assets/image/help-center-tips.png";
 
 const HelpCenter = () => {
   useEffect(() => {
@@ -78,7 +79,7 @@ const HelpCenter = () => {
         {/* Contact Us Section */}
         <div className="mt-16 text-center">
           <img
-            src="https://via.placeholder.com/800x400"
+            src={helpcenter}
             alt="Contact Support"
             className="rounded-lg shadow-md mx-auto w-full md:w-3/4 lg:w-1/2"
           />

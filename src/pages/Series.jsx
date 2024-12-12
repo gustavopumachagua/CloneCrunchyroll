@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   FaStar,
   FaHeart,
@@ -12,6 +12,7 @@ import AnimeEpisodes from "../components/AnimeEpisodio/AnimeEpisodes";
 
 const Series = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const anime = location.state?.anime;
 
   const [showFullSynopsis, setShowFullSynopsis] = useState(false);

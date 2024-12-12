@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FaUsers, FaGlobe, FaHistory, FaHeart } from "react-icons/fa";
+import acerca from "../assets/image/acerca.webp";
 
 const AboutSection = () => {
   useEffect(() => {
@@ -60,7 +61,7 @@ const AboutSection = () => {
 
         <div className="mt-16 text-center">
           <img
-            src="https://via.placeholder.com/800x400"
+            src={acerca}
             alt="Anime Community"
             className="rounded-lg shadow-md mx-auto w-full md:w-3/4 lg:w-1/2"
           />

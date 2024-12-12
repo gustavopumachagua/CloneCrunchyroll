@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FaCookieBite, FaShieldAlt, FaHandPointer } from "react-icons/fa";
+import cookie from "../assets/image/cookie.jpg";
 
 const CookieConsent = () => {
   useEffect(() => {
@@ -42,7 +43,7 @@ const CookieConsent = () => {
         {/* Imagen principal */}
         <div className="mb-12">
           <img
-            src="https://via.placeholder.com/800x400"
+            src={cookie}
             alt="Herramienta de Cookies"
             className="rounded-lg shadow-md mx-auto w-full md:w-3/4 lg:w-1/2"
           />

@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
-import { FaMusic, FaPlayCircle, FaChevronUp, FaVideo } from "react-icons/fa";
+import { FaMusic, FaPlayCircle, FaUser } from "react-icons/fa";
 
 const MusicVideos = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedVideo, setSelectedVideo] = useState(null); // State para el video seleccionado
 
   // Fetch data from Jikan API
   const fetchMusicVideos = async () => {
     try {
-      const response = await fetch("https://api.jikan.moe/v4/anime/1/videos");
+      const response = await fetch(
+        "https://api.jikan.moe/v4/anime/5114/videos"
+      );
       if (!response.ok) {
         throw new Error("Error al cargar videos musicales y conciertos.");
       }
@@ -27,6 +30,14 @@ const MusicVideos = () => {
     window.scrollTo(0, 0);
     fetchMusicVideos();
   }, []);
+
+  const handlePlayVideo = (video) => {
+    setSelectedVideo(video);
+  };
+
+  const handleCloseVideo = () => {
+    setSelectedVideo(null);
+  };
 
   if (loading) {
     return (
@@ -67,50 +78,66 @@ const MusicVideos = () => {
               className="bg-gray-800 shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
               <div className="relative">
                 <img
-                  src={video?.image_url || "https://via.placeholder.com/300"}
+                  src={
+                    video.video.images.large_image_url ||
+                    "https://via.placeholder.com/300"
+                  }
                   alt={video.title}
                   className="w-full h-56 object-cover"
                 />
-                <a
-                  href={video.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => handlePlayVideo(video)}
                   className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 hover:bg-opacity-75 transition duration-300">
                   <FaPlayCircle className="text-white text-4xl" />
-                </a>
+                </button>
               </div>
               <div className="p-4">
                 <h2 className="text-lg font-semibold text-white mb-2">
                   {video.title || "Título no disponible"}
                 </h2>
                 <p className="text-sm text-gray-300 mb-4">
-                  {video.description
-                    ? video.description.slice(0, 100) + "..."
-                    : "Sin descripción disponible."}
+                  {video.meta?.author
+                    ? `Autor: ${video.meta.author}`
+                    : "Autor desconocido"}
                 </p>
                 <div className="flex items-center justify-between text-sm text-gray-400">
                   <span>
-                    <FaVideo className="inline-block text-red-400 mr-2" />
-                    Duración: {video.duration || "Desconocida"}
+                    <FaUser className="inline-block text-yellow-400 mr-2" />
+                    {video.meta?.title || "Sin título"}
                   </span>
-                  <a
-                    href={video.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline">
-                    Ver video
-                  </a>
                 </div>
               </div>
             </div>
           ))}
         </div>
       )}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-4 right-4 bg-pink-500 p-3 rounded-full shadow-lg hover:bg-pink-600">
-        <FaChevronUp className="text-white" />
-      </button>
+
+      {/* Modal para el iframe del video */}
+      {selectedVideo && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
+          <div className="bg-gray-900 rounded-lg p-6 max-w-xl w-full">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-white">
+                {selectedVideo.title || "Reproduciendo video"}
+              </h2>
+              <button
+                onClick={handleCloseVideo}
+                className="text-red-500 text-lg font-semibold hover:underline">
+                Cerrar
+              </button>
+            </div>
+            <div className="aspect-w-16 aspect-h-9">
+              <iframe
+                src={selectedVideo.video.embed_url}
+                title={selectedVideo.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-64 rounded-lg"></iframe>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

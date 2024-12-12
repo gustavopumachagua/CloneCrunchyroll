@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { FaSortAlphaDown, FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { FaSortAlphaDown, FaPlayCircle } from "react-icons/fa";
 
 const AlphabeticalAnime = () => {
   const [animes, setAnimes] = useState([]);
@@ -7,25 +8,28 @@ const AlphabeticalAnime = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedLetter, setSelectedLetter] = useState("");
+  const navigate = useNavigate();
 
+  // Función para obtener todos los animes paginados
   const fetchAnimes = async () => {
     try {
-      const response = await fetch(
-        "https://api.jikan.moe/v4/anime?order_by=title&sort=asc&limit=10"
-      );
-      if (!response.ok) {
-        throw new Error("Error al cargar los animes.");
+      let fetchedAnimes = [];
+      for (let page = 1; page <= 10; page++) {
+        await new Promise((resolve) => setTimeout(resolve, 2000)); // Esperar 2 segundos
+        const response = await fetch(
+          `https://api.jikan.moe/v4/anime?order_by=title&sort=asc&page=${page}`
+        );
+        if (!response.ok) {
+          throw new Error("Error al cargar los animes.");
+        }
+        const data = await response.json();
+        if (data && Array.isArray(data.data)) {
+          fetchedAnimes = [...fetchedAnimes, ...data.data];
+        } else {
+          break;
+        }
       }
-      const data = await response.json();
-
-      // Valida que data tenga la estructura esperada
-      if (data && Array.isArray(data.data)) {
-        setAnimes(data.data);
-        setFilteredAnimes(data.data);
-      } else {
-        setAnimes([]);
-        setFilteredAnimes([]);
-      }
+      setAnimes(fetchedAnimes);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -33,25 +37,27 @@ const AlphabeticalAnime = () => {
     }
   };
 
-  // Filtrar animes por letra
+  // Función para filtrar por letra
   const filterByLetter = (letter) => {
     setSelectedLetter(letter);
-    if (letter === "") {
-      setFilteredAnimes(animes);
-    } else {
-      setFilteredAnimes(
-        animes.filter((anime) =>
-          anime.title.toLowerCase().startsWith(letter.toLowerCase())
-        )
-      );
-    }
+    setFilteredAnimes(
+      animes.filter((anime) => {
+        const title = anime.title || ""; // Manejo de valores nulos
+        const normalizedTitle = title.replace(/^[^a-zA-Z]+/, ""); // Elimina caracteres iniciales no alfabéticos
+        return normalizedTitle.toLowerCase().startsWith(letter.toLowerCase());
+      })
+    );
   };
 
-  // Scroll to top on load
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     fetchAnimes();
   }, []);
+
+  // Navegar a detalles del anime
+  const handleViewDetails = (anime) => {
+    navigate("/series", { state: { anime } });
+  };
 
   if (loading) {
     return (
@@ -85,7 +91,7 @@ const AlphabeticalAnime = () => {
       <div className="flex justify-center mb-6">
         <div className="grid grid-cols-12 gap-2 sm:grid-cols-8 md:grid-cols-12">
           {[...Array(26)].map((_, i) => {
-            const letter = String.fromCharCode(65 + i); // Letras A-Z
+            const letter = String.fromCharCode(65 + i);
             return (
               <button
                 key={letter}
@@ -99,21 +105,12 @@ const AlphabeticalAnime = () => {
               </button>
             );
           })}
-          <button
-            onClick={() => filterByLetter("")}
-            className={`px-2 py-1 rounded ${
-              selectedLetter === ""
-                ? "bg-blue-500 text-white"
-                : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-            }`}>
-            Todos
-          </button>
         </div>
       </div>
       <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {filteredAnimes.map((anime) => (
+        {filteredAnimes.map((anime, index) => (
           <div
-            key={anime.mal_id}
+            key={`${anime.mal_id}-${index}`}
             className="bg-gray-800 shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
             <img
               src={anime.images.jpg.large_image_url}
@@ -127,14 +124,13 @@ const AlphabeticalAnime = () => {
               <p className="text-sm text-gray-300 mb-4">
                 {anime.synopsis?.slice(0, 100) || "Sin descripción..."}...
               </p>
-              <div className="text-center mt-4">
-                <a
-                  href={anime.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm">
-                  Más detalles
-                </a>
+              <div className="p-4 bg-gray-700 text-center flex justify-center">
+                <button
+                  onClick={() => handleViewDetails(anime)}
+                  className="text-blue-500 hover:underline flex items-center justify-center space-x-2">
+                  <FaPlayCircle className="text-blue-400" />
+                  <span>Ver Anime</span>
+                </button>
               </div>
             </div>
           </div>

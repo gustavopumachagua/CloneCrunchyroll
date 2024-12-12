@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
+import contacto from "../assets/image/contacto.png";
 
 const PressContact = () => {
   useEffect(() => {
@@ -39,7 +40,7 @@ const PressContact = () => {
         {/* Imagen principal */}
         <div className="mb-12">
           <img
-            src="https://via.placeholder.com/800x400"
+            src={contacto}
             alt="Contacto de Prensa"
             className="rounded-lg shadow-md mx-auto w-full md:w-3/4 lg:w-1/2"
           />

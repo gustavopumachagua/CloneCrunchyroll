@@ -1,4 +1,5 @@
 import { FaPlane } from "react-icons/fa";
+import premiumImage from "../../assets/image/premium.avif";
 
 const BeneficioPremium = ({ onExplorePlansClick }) => {
   return (
@@ -7,7 +8,7 @@ const BeneficioPremium = ({ onExplorePlansClick }) => {
         {/* Imagen */}
         <div className="flex justify-center lg:justify-end">
           <img
-            src="https://imgsrv.crunchyroll.com/cdn-cgi/image/fit=contain,format=auto,quality=85,width=1200,height=675/catalog/crunchyroll/a249096c7812deb8c3c2c907173f3774.jpg" // Reemplaza este enlace con la imagen deseada
+            src={premiumImage}
             alt="Disfruta contenido sin conexión"
             className="rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 max-w-full"
           />

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaAward,
   FaStar,
@@ -11,6 +12,8 @@ const AnimeAwards = () => {
   const [awards, setAwards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   // Fetch data
   const fetchAwardsData = async () => {
@@ -102,14 +105,13 @@ const AnimeAwards = () => {
                 </span>
               </div>
             </div>
-            <div className="p-4 bg-gray-700 text-center">
-              <a
-                href={anime.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline text-sm">
-                Ver más detalles
-              </a>
+            <div className="p-4 bg-gray-700 text-center flex justify-center">
+              <button
+                onClick={() => navigate("/series", { state: { anime } })}
+                className="text-blue-500 hover:underline flex items-center justify-center space-x-2">
+                <FaPlayCircle className="text-blue-400" />
+                <span>Ver Anime</span>
+              </button>
             </div>
           </div>
         ))}

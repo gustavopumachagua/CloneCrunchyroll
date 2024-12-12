@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { FaCalendarAlt, FaMapMarkerAlt, FaTicketAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaMapMarkerAlt, FaPlayCircle  } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const EventsAndExperiences = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   // Fetch data from API
   const fetchEventsData = async () => {
@@ -89,14 +91,15 @@ const EventsAndExperiences = () => {
                 </span>
               </div>
             </div>
-            <div className="p-4 bg-gray-700 text-center">
-              <a
-                href={event.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline text-sm">
-                Ver más detalles <FaTicketAlt className="inline-block" />
-              </a>
+            <div className="p-4 bg-gray-700 text-center flex justify-center">
+              <button
+                onClick={() =>
+                  navigate("/series", { state: { anime: event } })
+                }
+                className="text-blue-500 hover:underline flex items-center justify-center space-x-2">
+                <FaPlayCircle className="text-blue-400" />
+                               <span>Ver Anime</span>
+              </button>
             </div>
           </div>
         ))}

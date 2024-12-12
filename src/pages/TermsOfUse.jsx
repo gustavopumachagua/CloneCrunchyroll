@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FaBalanceScale, FaRegFileAlt, FaUserShield } from "react-icons/fa";
+import terminouso from "../assets/image/termino_uso.png";
 
 const TermsOfUse = () => {
   useEffect(() => {
@@ -41,7 +42,7 @@ const TermsOfUse = () => {
         {/* Image Section */}
         <div className="mb-12">
           <img
-            src="https://via.placeholder.com/800x400"
+            src={terminouso}
             alt="Términos de Uso"
             className="rounded-lg shadow-md mx-auto w-full md:w-3/4 lg:w-1/2"
           />

@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import { FaClock, FaCalendarAlt, FaPlayCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const NovedadesPage = () => {
   const [latestAnime, setLatestAnime] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleViewDetails = (anime) => {
+    navigate("/series", { state: { anime } });
+  };
 
   const fetchLatestAnime = async () => {
     try {
@@ -89,14 +95,13 @@ const NovedadesPage = () => {
                 </div>
               </div>
             </div>
-            <div className="p-4 bg-gray-700 text-center">
-              <a
-                href={anime.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline text-sm">
-                Más detalles
-              </a>
+            <div className="p-4 bg-gray-700 text-center flex justify-center">
+              <button
+                onClick={() => handleViewDetails(anime)}
+                className="text-blue-500 hover:underline flex items-center justify-center space-x-2">
+                <FaPlayCircle className="text-blue-400" />
+                <span>Ver Anime</span>
+              </button>
             </div>
           </div>
         ))}

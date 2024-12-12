@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { FaGamepad, FaPlayCircle, FaChevronUp } from "react-icons/fa";
+import { FaGamepad, FaPlayCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const AnimeGames = () => {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   // Fetch data from Jikan API
   const fetchGames = async () => {
@@ -53,6 +55,10 @@ const AnimeGames = () => {
     );
   }
 
+  const handleNavigate = (game) => {
+    navigate("/series", { state: { anime: game } });
+  };
+
   return (
     <div className="max-w-7xl mx-auto py-20 px-4">
       <h1 className="text-4xl font-bold text-center mb-10 text-white">
@@ -73,13 +79,11 @@ const AnimeGames = () => {
                   alt={game.title}
                   className="w-full h-56 object-cover"
                 />
-                <a
-                  href={`https://myanimelist.net/anime/${game.mal_id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => handleNavigate(game)}
                   className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 hover:bg-opacity-75 transition duration-300">
                   <FaPlayCircle className="text-white text-4xl" />
-                </a>
+                </button>
               </div>
               <div className="p-4">
                 <h2 className="text-lg font-semibold text-white mb-2">
@@ -95,24 +99,12 @@ const AnimeGames = () => {
                     Popularidad:{" "}
                     <span className="text-green-400">{game.popularity}</span>
                   </span>
-                  <a
-                    href={`https://myanimelist.net/anime/${game.mal_id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline">
-                    Detalles
-                  </a>
                 </div>
               </div>
             </div>
           ))}
         </div>
       )}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-4 right-4 bg-green-500 p-3 rounded-full shadow-lg hover:bg-green-600">
-        <FaChevronUp className="text-white" />
-      </button>
     </div>
   );
 };

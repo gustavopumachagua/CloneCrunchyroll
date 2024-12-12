@@ -87,9 +87,7 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
       }
       if (option === "Juegos") {
         navigate("/AnimeGames"); // Redirigir a la página de noticias
-      } else {
-        alert(`Seleccionaste: ${option}`);
-      }
+      } 
     }
     close?.(); // Cierra el Dropdown al seleccionar cualquier opción
   };

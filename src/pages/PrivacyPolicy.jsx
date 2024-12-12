@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FaLock, FaUserSecret, FaDatabase } from "react-icons/fa";
+import politicaseguridad from "../assets/image/politica_seguridad.jpg";
 
 const PrivacyPolicy = () => {
   useEffect(() => {
@@ -41,7 +42,7 @@ const PrivacyPolicy = () => {
         {/* Imagen principal */}
         <div className="mb-12">
           <img
-            src="https://via.placeholder.com/800x400"
+            src={politicaseguridad}
             alt="Política de Privacidad"
             className="rounded-lg shadow-md mx-auto w-full md:w-3/4 lg:w-1/2"
           />

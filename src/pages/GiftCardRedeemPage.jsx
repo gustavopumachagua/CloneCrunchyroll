@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { FaGift, FaCreditCard, FaRegCheckCircle } from "react-icons/fa";
+import regalo from "../assets/image/regalo.avif";
 
 const GiftCardRedeemPage = () => {
   useEffect(() => {
@@ -8,7 +9,7 @@ const GiftCardRedeemPage = () => {
   }, []);
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen py-10 px-6">
+    <div className="bg-gray-900 text-white min-h-screen py-20 px-6">
       <div className="max-w-4xl mx-auto">
         {/* Título */}
         <div className="text-center mb-10">
@@ -25,7 +26,7 @@ const GiftCardRedeemPage = () => {
           {/* Imagen representativa */}
           <div className="flex justify-center">
             <img
-              src="https://via.placeholder.com/300"
+              src={regalo}
               alt="Gift Card"
               className="rounded-lg shadow-lg"
             />

@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
-import { FaHeart, FaStar, FaUserAlt } from "react-icons/fa";
+import { FaHeart, FaStar, FaUserAlt, FaPlayCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const PopularAnime = () => {
   const [popularAnime, setPopularAnime] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
+  const handleViewDetails = (anime) => {
+    navigate("/series", { state: { anime } });
+  };
   // Fetch data from Jikan API
   const fetchPopularAnime = async () => {
     try {
@@ -87,14 +92,13 @@ const PopularAnime = () => {
                 {anime.synopsis?.slice(0, 100) || "Sin descripción..."}...
               </p>
             </div>
-            <div className="p-4 bg-gray-700 text-center">
-              <a
-                href={anime.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline text-sm">
-                Ver más detalles
-              </a>
+            <div className="p-4 bg-gray-700 text-center flex justify-center">
+              <button
+                onClick={() => handleViewDetails(anime)}
+                className="text-blue-500 hover:underline flex items-center justify-center space-x-2">
+                <FaPlayCircle className="text-blue-400" />
+                <span>Ver Anime</span>
+              </button>
             </div>
           </div>
         ))}

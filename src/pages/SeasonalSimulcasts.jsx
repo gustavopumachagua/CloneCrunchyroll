@@ -3,13 +3,16 @@ import {
   FaCalendarAlt,
   FaPlayCircle,
   FaUsers,
-  FaChevronUp,
+  FaStar,
+  FaTv,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const SeasonalSimulcasts = () => {
   const [animes, setAnimes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   // Fetch data from Jikan API
   const fetchSimulcasts = async () => {
@@ -33,9 +36,13 @@ const SeasonalSimulcasts = () => {
     fetchSimulcasts();
   }, []);
 
+  const handleViewDetails = (anime) => {
+    navigate("/series", { state: { anime } });
+  };
+
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen bg-gray-900">
         <div className="text-lg font-semibold text-white">
           Cargando Temporada de Simulcasts...
         </div>
@@ -45,7 +52,7 @@ const SeasonalSimulcasts = () => {
 
   if (error) {
     return (
-      <div className="flex flex-col justify-center items-center h-screen text-center">
+      <div className="flex flex-col justify-center items-center h-screen bg-gray-900 text-center">
         <p className="text-red-500 font-semibold mb-4">{error}</p>
         <button
           onClick={fetchSimulcasts}
@@ -57,8 +64,8 @@ const SeasonalSimulcasts = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto py-20 px-4">
-      <h1 className="text-4xl font-bold text-center mb-10 text-white">
+    <div className="bg-gray-900 text-white min-h-screen py-20 px-4">
+      <h1 className="text-4xl font-bold text-center mb-10">
         <FaCalendarAlt className="inline-block text-yellow-500 mr-2" />
         Temporada de Simulcasts
       </h1>
@@ -66,13 +73,13 @@ const SeasonalSimulcasts = () => {
         {animes.map((anime) => (
           <div
             key={anime.mal_id}
-            className="bg-gray-800 shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            className="bg-gray-800 shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
             <img
               src={anime.images?.jpg?.large_image_url}
               alt={anime.title}
               className="w-full h-56 object-cover"
             />
-            <div className="p-4 flex flex-col justify-between h-full">
+            <div className="p-4 flex-grow flex flex-col justify-between">
               <h2 className="text-lg font-semibold text-white mb-2">
                 {anime.title}
               </h2>
@@ -80,26 +87,37 @@ const SeasonalSimulcasts = () => {
                 <FaPlayCircle />
                 Episodios: {anime.episodes || "TBA"}
               </div>
-              <div className="flex items-center text-sm text-gray-400 gap-2 mb-4">
+              <div className="flex items-center text-sm text-gray-400 gap-2 mb-2">
+                <FaTv />
+                Tipo: {anime.type || "Desconocido"}
+              </div>
+              <div className="flex items-center text-sm text-gray-400 gap-2 mb-2">
+                <FaCalendarAlt />
+                Emisión:{" "}
+                {anime.aired?.from
+                  ? new Date(anime.aired.from).toLocaleDateString()
+                  : "N/A"}
+              </div>
+              <div className="flex items-center text-sm text-gray-400 gap-2 mb-2">
                 <FaUsers />
                 Popularidad: {anime.popularity || "N/A"}
               </div>
-              <a
-                href={anime.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm text-center">
-                Ver más detalles
-              </a>
+              <div className="flex items-center text-sm text-gray-400 gap-2 mb-4">
+                <FaStar className="text-yellow-400" />
+                Puntuación: {anime.score || "N/A"}
+              </div>
+              <div className="p-4 bg-gray-700 text-center flex justify-center">
+                <button
+                  onClick={() => handleViewDetails(anime)}
+                  className="text-blue-500 hover:underline flex items-center justify-center space-x-2">
+                  <FaPlayCircle className="text-blue-400" />
+                  <span>Ver Anime</span>
+                </button>
+              </div>
             </div>
           </div>
         ))}
       </div>
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-4 right-4 bg-blue-500 p-3 rounded-full shadow-lg hover:bg-blue-600">
-        <FaChevronUp className="text-white" />
-      </button>
     </div>
   );
 };
