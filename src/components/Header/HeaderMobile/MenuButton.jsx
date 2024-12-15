@@ -7,17 +7,14 @@ const MenuButton = ({ toggleMenu, isOpen }) => {
       aria-expanded={isOpen}
       role="button">
       <div className="flex flex-col justify-center items-center space-y-1 relative">
-        {/* Línea superior */}
         <div
           className={`h-1 w-6 bg-gray-400 rounded transition-transform duration-300 ${
             isOpen ? "transform rotate-45 translate-y-2" : ""
           }`}></div>
-        {/* Línea media */}
         <div
           className={`h-1 w-6 bg-gray-400 rounded transition-opacity duration-300 ${
             isOpen ? "opacity-0" : ""
           }`}></div>
-        {/* Línea inferior */}
         <div
           className={`h-1 w-6 bg-gray-400 rounded transition-transform duration-300 ${
             isOpen ? "transform -rotate-45 -translate-y-2" : ""

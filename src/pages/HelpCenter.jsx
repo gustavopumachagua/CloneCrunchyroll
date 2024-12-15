@@ -10,7 +10,7 @@ import helpcenter from "../assets/image/help-center-tips.png";
 
 const HelpCenter = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Realiza scroll hacia arriba al cargar la página
+    window.scrollTo(0, 0);
   }, []);
 
   const helpOptions = [
@@ -51,7 +51,6 @@ const HelpCenter = () => {
           encuentra la asistencia que necesitas.
         </p>
 
-        {/* Search Section */}
         <div className="flex justify-center mb-12">
           <div className="relative w-full max-w-lg">
             <input
@@ -63,7 +62,6 @@ const HelpCenter = () => {
           </div>
         </div>
 
-        {/* Help Options */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {helpOptions.map((option, index) => (
             <div
@@ -76,7 +74,6 @@ const HelpCenter = () => {
           ))}
         </div>
 
-        {/* Contact Us Section */}
         <div className="mt-16 text-center">
           <img
             src={helpcenter}

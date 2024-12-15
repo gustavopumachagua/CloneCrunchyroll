@@ -11,7 +11,6 @@ const PopularAnime = () => {
   const handleViewDetails = (anime) => {
     navigate("/series", { state: { anime } });
   };
-  // Fetch data from Jikan API
   const fetchPopularAnime = async () => {
     try {
       const response = await fetch(
@@ -29,7 +28,6 @@ const PopularAnime = () => {
     }
   };
 
-  // Scroll to top on load
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     fetchPopularAnime();
@@ -69,11 +67,13 @@ const PopularAnime = () => {
           <div
             key={anime.mal_id}
             className="bg-gray-800 shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
-            <img
-              src={anime.images.jpg.large_image_url}
-              alt={anime.title}
-              className="w-full h-60 object-cover"
-            />
+            <div className="flex justify-center">
+              <img
+                src={anime.images.jpg.large_image_url}
+                alt={anime.title}
+                className="w-40 h-auto object-cover"
+              />
+            </div>
             <div className="p-4 flex-grow flex flex-col justify-between">
               <h2 className="text-xl font-semibold text-white mb-2">
                 {anime.title}

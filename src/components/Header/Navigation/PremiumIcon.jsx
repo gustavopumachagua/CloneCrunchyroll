@@ -34,7 +34,7 @@ const PremiumIcon = ({ showText = true }) => {
         title="Premium"
       />
       <PremiumTooltip isVisible={isTooltipVisible} />
-      {showText && <PremiumButton />} {/* Usar el botón actualizado */}
+      {showText && <PremiumButton />}
     </div>
   );
 };

@@ -8,7 +8,6 @@ import {
 
 const JobPage = () => {
   useEffect(() => {
-    // Llevar al usuario al inicio de la página al cargar
     window.scrollTo(0, 0);
   }, []);
 
@@ -42,7 +41,6 @@ const JobPage = () => {
   return (
     <div className="bg-gray-900 text-white min-h-screen py-20 px-6">
       <div className="max-w-6xl mx-auto">
-        {/* Título */}
         <div className="text-center mb-10">
           <FaBriefcase className="text-orange-500 text-5xl mx-auto mb-4" />
           <h1 className="text-4xl font-bold">Únete a nuestro equipo</h1>
@@ -52,7 +50,6 @@ const JobPage = () => {
           </p>
         </div>
 
-        {/* Ofertas de empleo */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {jobs.map((job) => (
             <div

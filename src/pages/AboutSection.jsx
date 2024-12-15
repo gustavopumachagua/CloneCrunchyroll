@@ -4,7 +4,7 @@ import acerca from "../assets/image/acerca.webp";
 
 const AboutSection = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Realiza scroll hacia arriba al cargar la página
+    window.scrollTo(0, 0);
   }, []);
 
   const aboutData = [

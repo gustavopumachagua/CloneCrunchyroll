@@ -7,7 +7,7 @@ const Bookmarks = () => {
   const [isActive, setIsActive] = useState(false);
 
   const toggleBookmark = () => {
-    setIsActive((prev) => !prev); // Alterna el estado del botón
+    setIsActive((prev) => !prev);
   };
 
   return (

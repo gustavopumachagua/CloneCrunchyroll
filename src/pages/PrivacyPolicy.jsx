@@ -4,7 +4,7 @@ import politicaseguridad from "../assets/image/politica_seguridad.jpg";
 
 const PrivacyPolicy = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll hacia arriba al cargar la página
+    window.scrollTo(0, 0);
   }, []);
 
   const policySections = [
@@ -31,7 +31,6 @@ const PrivacyPolicy = () => {
   return (
     <div className="bg-gray-900 text-white py-20 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Encabezado */}
         <h1 className="text-4xl font-bold text-center mb-10">
           Política de Privacidad
         </h1>
@@ -39,7 +38,6 @@ const PrivacyPolicy = () => {
           Conoce cómo protegemos y utilizamos tu información.
         </p>
 
-        {/* Imagen principal */}
         <div className="mb-12">
           <img
             src={politicaseguridad}
@@ -48,7 +46,6 @@ const PrivacyPolicy = () => {
           />
         </div>
 
-        {/* Secciones de la Política */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {policySections.map((section, index) => (
             <div
@@ -60,8 +57,6 @@ const PrivacyPolicy = () => {
             </div>
           ))}
         </div>
-
-        {/* Texto Completo */}
         <div className="mt-16">
           <h2 className="text-3xl font-bold mb-6">Detalles Completos</h2>
           <p className="text-gray-400 leading-relaxed mb-6">

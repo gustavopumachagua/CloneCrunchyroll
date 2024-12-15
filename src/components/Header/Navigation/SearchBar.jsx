@@ -10,8 +10,8 @@ const SearchBar = () => {
     setIsActive(true);
     setTimeout(() => {
       setIsActive(false);
-      navigate("/search"); // Navega a la ruta "/search"
-    }, 200); // Simula un efecto de clic
+      navigate("/search");
+    }, 200);
   };
 
   return (

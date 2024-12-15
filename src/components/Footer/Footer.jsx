@@ -15,8 +15,6 @@ const Footer = () => {
           <CrunchyrollSection />
           <AccountSection />
         </div>
-
-        {/* Línea inferior */}
         <div className="border-t border-gray-700 mt-8 pt-4 flex flex-col md:flex-row items-center justify-between text-sm">
           <span>© Crunchyroll, LLC</span>
           <span className="mt-2 md:mt-0">ESPAÑOL</span>

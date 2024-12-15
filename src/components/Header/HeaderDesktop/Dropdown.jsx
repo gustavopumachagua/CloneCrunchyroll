@@ -6,13 +6,11 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  // Manejar bloqueo/desbloqueo de scroll
   useEffect(() => {
     document.body.style.overflow = isActive ? "hidden" : "auto";
     return () => (document.body.style.overflow = "auto");
   }, [isActive]);
 
-  // Manejo de clics fuera del Dropdown y presionar Escape
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -34,7 +32,6 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
     };
   }, [close]);
 
-  // Mapear géneros a IDs para redirección
   const genreMap = {
     Acción: 1,
     Aventura: 2,
@@ -55,41 +52,41 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
 
   const handleOptionClick = (option) => {
     if (option === "Todas las noticias") {
-      navigate("/NewsPage"); // Redirigir a la página de noticias
+      navigate("/NewsPage");
     } else {
       const genreId = genreMap[option];
       if (genreId) {
         navigate(`/genre/${genreId}`);
       }
       if (option === "Anime Awards") {
-        navigate("/AnimeAwards"); // Redirigir a la página de noticias
+        navigate("/AnimeAwards");
       }
       if (option === "Eventos y experiencias") {
-        navigate("/EventsAndExperiences"); // Redirigir a la página de noticias
+        navigate("/EventsAndExperiences");
       }
       if (option === "Popular") {
-        navigate("/PopularAnime"); // Redirigir a la página de noticias
+        navigate("/PopularAnime");
       }
       if (option === "Novedades") {
-        navigate("/Novedades"); // Redirigir a la página de noticias
+        navigate("/Novedades");
       }
       if (option === "Alfabético") {
-        navigate("/Alfabetico"); // Redirigir a la página de noticias
+        navigate("/Alfabetico");
       }
       if (option === "Temporada de Simulcats") {
         navigate("/SeasonalSimulcasts");
       }
       if (option === "Calendario de Lanzamientos") {
-        navigate("/ReleaseCalendar"); // Redirigir a la página de noticias
+        navigate("/ReleaseCalendar");
       }
       if (option === "Videos musicales y conciertos") {
-        navigate("/MusicVideos"); // Redirigir a la página de noticias
+        navigate("/MusicVideos");
       }
       if (option === "Juegos") {
-        navigate("/AnimeGames"); // Redirigir a la página de noticias
-      } 
+        navigate("/AnimeGames");
+      }
     }
-    close?.(); // Cierra el Dropdown al seleccionar cualquier opción
+    close?.();
   };
 
   const showCaretIcon =
@@ -98,7 +95,6 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
 
   return (
     <>
-      {/* Fondo de overlay */}
       {isActive && (
         <div
           className="fixed inset-0 bg-black/75 z-40"
@@ -106,8 +102,6 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
           onClick={close}
           aria-hidden="true"></div>
       )}
-
-      {/* Dropdown principal */}
       <li
         className="relative z-50"
         ref={dropdownRef}
@@ -128,7 +122,6 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
               options.type === "two-columns" ? "w-[870px]" : "w-48"
             } bg-gray-700 text-white rounded shadow-lg overflow-hidden`}
             role="menu">
-            {/* Caso dos columnas */}
             {options.type === "two-columns" && (
               <div className="grid grid-cols-[250px_1fr] gap-x-8 p-4">
                 <div
@@ -160,7 +153,6 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
                 </div>
               </div>
             )}
-            {/* Menú simple */}
             {Array.isArray(options) && (
               <ul>
                 {options.map((option, index) => (

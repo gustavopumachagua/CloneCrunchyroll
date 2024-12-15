@@ -8,14 +8,14 @@ const Header = () => {
   );
 
   useEffect(() => {
-    if (typeof window === "undefined") return; // Protección para entornos sin acceso a `window`.
+    if (typeof window === "undefined") return;
 
     let timeoutId;
     const handleResize = () => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         setIsMobile(window.innerWidth < 768);
-      }, 150); // Debounce de 150ms para reducir llamadas innecesarias.
+      }, 150);
     };
 
     window.addEventListener("resize", handleResize);

@@ -4,7 +4,7 @@ import cookie from "../assets/image/cookie.jpg";
 
 const CookieConsent = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll hacia arriba al cargar la página
+    window.scrollTo(0, 0);
   }, []);
 
   const cookieFeatures = [

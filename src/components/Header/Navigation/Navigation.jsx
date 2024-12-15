@@ -48,8 +48,6 @@ const Navigation = () => {
   ];
 
   const [activeDropdown, setActiveDropdown] = useState(null);
-
-  // Cerrar dropdowns al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (!e.target.closest(".dropdown-container")) {

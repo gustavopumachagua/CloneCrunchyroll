@@ -28,7 +28,6 @@ const DescriptionPremium = ({ onComparePlansClick }) => {
   return (
     <div className="bg-gradient-to-b from-gray-900 via-black to-gray-900 text-white py-16 px-6">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-10">
-        {/* Título y botón */}
         <div className="lg:w-1/2 text-center lg:text-left">
           <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 leading-snug">
             Consigue más <span className="text-yellow-400">con Premium</span>
@@ -43,8 +42,6 @@ const DescriptionPremium = ({ onComparePlansClick }) => {
             COMPARAR PLANES <span className="ml-2">⬇</span>
           </button>
         </div>
-
-        {/* Características */}
         <div className="lg:w-1/2 grid grid-cols-2 gap-6">
           {features.map((feature, index) => (
             <div

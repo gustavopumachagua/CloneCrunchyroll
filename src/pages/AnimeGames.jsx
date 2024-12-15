@@ -8,7 +8,6 @@ const AnimeGames = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Fetch data from Jikan API
   const fetchGames = async () => {
     try {
       const response = await fetch(
@@ -26,7 +25,6 @@ const AnimeGames = () => {
     }
   };
 
-  // Scroll to top on page load
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchGames();
@@ -74,11 +72,13 @@ const AnimeGames = () => {
               key={game.mal_id}
               className="bg-gray-800 shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
               <div className="relative">
-                <img
-                  src={game.images.jpg.large_image_url}
-                  alt={game.title}
-                  className="w-full h-56 object-cover"
-                />
+                <div className="flex justify-center">
+                  <img
+                    src={game.images.jpg.large_image_url}
+                    alt={game.title}
+                    className="w-full h-56 object-cover"
+                  />
+                </div>
                 <button
                   onClick={() => handleNavigate(game)}
                   className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 hover:bg-opacity-75 transition duration-300">

@@ -56,7 +56,7 @@ const NewsPage = () => {
     );
 
   const handleImageError = (e) => {
-    e.target.src = "https://via.placeholder.com/150?text=No+Image"; // Imagen predeterminada
+    e.target.src = "https://via.placeholder.com/150?text=No+Image";
   };
 
   const defaultImage = "https://via.placeholder.com/150?text=No+Image";
@@ -94,7 +94,7 @@ const NewsPage = () => {
               </p>
               <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
                 <span className="flex items-center gap-2">
-                  <FaUserAlt />{" "}
+                  <FaUserAlt />
                   <a
                     href={article.author_url}
                     className="text-blue-500 hover:underline"

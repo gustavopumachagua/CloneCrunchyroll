@@ -10,9 +10,8 @@ import {
 const DesktopHeader = () => {
   return (
     <header
-      className="fixed top-0 left-0 w-full flex items-center justify-between bg-gray-900 px-8 md:px-20 py-4 text-white shadow-lg z-50"
+      className="fixed top-0 left-0 w-full flex items-center justify-between bg-gray-900 px-8 md:px-20 py-4 text-white shadow-lg z-40"
       role="banner">
-      {/* Logo y navegación principal */}
       <div
         className="flex justify-start items-center space-x-6 md:space-x-10"
         role="navigation"
@@ -20,8 +19,6 @@ const DesktopHeader = () => {
         <Logo />
         <Navigation />
       </div>
-
-      {/* Iconos y acciones */}
       <div className="flex items-center space-x-20 md:space-x-10">
         <div
           role="button"

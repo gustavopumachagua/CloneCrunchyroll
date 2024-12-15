@@ -11,9 +11,9 @@ export const fetchTopAnimes = async (limit = 15, retries = 3) => {
   } catch (error) {
     if (error.response?.status === 429 && retries > 0) {
       console.warn("Demasiadas solicitudes. Reintentando...");
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Retraso de 2 segundos
-      return fetchTopAnimes(limit, retries - 1); // Reintenta con menos intentos
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      return fetchTopAnimes(limit, retries - 1);
     }
-    throw error; // Si no es un error 429 o no quedan reintentos, propaga el error
+    throw error;
   }
 };

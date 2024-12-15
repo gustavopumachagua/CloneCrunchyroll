@@ -11,14 +11,14 @@ const FooterSection = ({ title, items }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2  justify-start text-gray-400 hover:text-white">
-                {item.icon && item.icon} {/* Ícono opcional */}
+                {item.icon && item.icon}
                 {item.name}
               </a>
             ) : (
               <button
                 onClick={item.onClick}
                 className="flex items-center gap-2  justify-start text-gray-400 hover:text-white">
-                {item.icon && item.icon} {/* Ícono opcional */}
+                {item.icon && item.icon}
                 {typeof item === "string" ? item : item.name}
               </button>
             )}

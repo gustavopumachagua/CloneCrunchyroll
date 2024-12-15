@@ -1,4 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import OfflineAlert from "./components/OfflineAlert";
+import Loader from "./components/Loader";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Hero from "./components/Hero/Hero";
@@ -35,11 +38,21 @@ import FooterAccount from "./components/Account/FooterAccount";
 import HeaderAccount from "./components/Account/HeaderAccount";
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <Router>
       <div className="App">
+        <OfflineAlert />
         <Routes>
-          {/* Rutas con Header y Footer globales */}
           <Route
             path="/"
             element={
@@ -54,6 +67,7 @@ const App = () => {
                 <div className="min-h-screen bg-gray-900 text-white p-4">
                   <NewAnime animeId={20} />
                 </div>
+
                 <Footer />
               </>
             }
@@ -130,8 +144,6 @@ const App = () => {
               </>
             }
           />
-
-          {/* Rutas con HeaderAccount y FooterAccount */}
           <Route
             path="/register"
             element={

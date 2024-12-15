@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaCalendarAlt, FaMapMarkerAlt, FaPlayCircle  } from "react-icons/fa";
+import { FaCalendarAlt, FaMapMarkerAlt, FaPlayCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const EventsAndExperiences = () => {
@@ -8,17 +8,14 @@ const EventsAndExperiences = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Fetch data from API
   const fetchEventsData = async () => {
     try {
-      const response = await fetch(
-        "https://api.jikan.moe/v4/seasons/upcoming" // Replace with actual endpoint for events if available
-      );
+      const response = await fetch("https://api.jikan.moe/v4/seasons/upcoming");
       if (!response.ok) {
         throw new Error("Error al cargar los eventos.");
       }
       const data = await response.json();
-      setEvents(data.data.slice(0, 12)); // Limiting to 12 events for display
+      setEvents(data.data.slice(0, 12));
     } catch (err) {
       setError(err.message);
     } finally {
@@ -26,7 +23,6 @@ const EventsAndExperiences = () => {
     }
   };
 
-  // Scroll to top on load
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     fetchEventsData();
@@ -66,11 +62,13 @@ const EventsAndExperiences = () => {
           <div
             key={event.mal_id}
             className="bg-gray-800 shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
-            <img
-              src={event.images.jpg.large_image_url}
-              alt={event.title}
-              className="w-full h-60 object-cover"
-            />
+            <div className="flex justify-center">
+              <img
+                src={event.images.jpg.large_image_url}
+                alt={event.title}
+                className="w-40 h-auto object-cover"
+              />
+            </div>
             <div className="p-4 flex-grow flex flex-col justify-between">
               <h2 className="text-xl font-semibold text-white mb-2">
                 {event.title}
@@ -93,12 +91,10 @@ const EventsAndExperiences = () => {
             </div>
             <div className="p-4 bg-gray-700 text-center flex justify-center">
               <button
-                onClick={() =>
-                  navigate("/series", { state: { anime: event } })
-                }
+                onClick={() => navigate("/series", { state: { anime: event } })}
                 className="text-blue-500 hover:underline flex items-center justify-center space-x-2">
                 <FaPlayCircle className="text-blue-400" />
-                               <span>Ver Anime</span>
+                <span>Ver Anime</span>
               </button>
             </div>
           </div>

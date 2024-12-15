@@ -4,7 +4,7 @@ import terminouso from "../assets/image/termino_uso.png";
 
 const TermsOfUse = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Realiza scroll hacia arriba al cargar la página
+    window.scrollTo(0, 0);
   }, []);
 
   const sections = [
@@ -31,7 +31,6 @@ const TermsOfUse = () => {
   return (
     <div className="bg-gray-900 text-white py-20 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <h1 className="text-4xl font-bold text-center mb-10">
           Términos de Uso
         </h1>
@@ -39,7 +38,6 @@ const TermsOfUse = () => {
           Conoce las reglas y políticas que rigen el uso de nuestra plataforma.
         </p>
 
-        {/* Image Section */}
         <div className="mb-12">
           <img
             src={terminouso}
@@ -48,7 +46,6 @@ const TermsOfUse = () => {
           />
         </div>
 
-        {/* Terms Sections */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {sections.map((section, index) => (
             <div
@@ -61,7 +58,6 @@ const TermsOfUse = () => {
           ))}
         </div>
 
-        {/* Full Terms Section */}
         <div className="mt-16">
           <h2 className="text-3xl font-bold mb-6">Términos Completos</h2>
           <p className="text-gray-400 leading-relaxed mb-6">

@@ -1,5 +1,3 @@
-import React from "react";
-
 const Pagination = ({ currentPage, totalPages, onPageChange }) => (
   <div className="flex justify-center items-center mt-6 space-x-4">
     <button

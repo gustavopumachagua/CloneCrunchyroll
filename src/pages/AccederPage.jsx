@@ -3,20 +3,14 @@ import { Link } from "react-router-dom";
 
 const AccederPage = () => {
   useEffect(() => {
-    // Llevar el scroll al inicio de la página
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white">
-      {/* Contenedor del formulario */}
       <div className="w-full max-w-md bg-gray-900 rounded-lg shadow-lg p-6">
-        {/* Título */}
         <h1 className="text-2xl font-bold text-center mb-6">Acceder</h1>
-
-        {/* Formulario */}
         <form>
-          {/* Campo de email */}
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium mb-2">
               Dirección de email
@@ -29,8 +23,6 @@ const AccederPage = () => {
               required
             />
           </div>
-
-          {/* Campo de contraseña */}
           <div className="mb-4">
             <label
               htmlFor="password"
@@ -52,16 +44,12 @@ const AccederPage = () => {
               </a>
             </p>
           </div>
-
-          {/* Botón Acceder */}
           <button
             type="submit"
             className="w-full bg-orange-500 text-black font-bold py-2 rounded-lg hover:bg-orange-600 transition">
             ACCEDER
           </button>
         </form>
-
-        {/* Enlace para crear una cuenta */}
         <p className="text-center text-sm text-gray-400 mt-6">
           ¿No tienes cuenta?{" "}
           <Link

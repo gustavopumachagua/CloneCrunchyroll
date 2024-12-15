@@ -9,7 +9,7 @@ const MenuDropdown = ({ closeMenu }) => {
   };
 
   const handleClickOption = () => {
-    closeMenu(); // Cierra el menú cuando se selecciona una opción
+    closeMenu();
   };
 
   return (
@@ -33,7 +33,6 @@ const MenuDropdown = ({ closeMenu }) => {
           onClick={handleClickOption}>
           Temporada de Simulcasts
         </li>
-        {/* Submenús */}
         <Submenu
           title="Géneros"
           items={["Acción", "Aventura", "Comedia", "Drama", "Fantasía"]}

@@ -1,5 +1,5 @@
-import { FiBookmark } from "react-icons/fi";
 import { FaPlay, FaShieldAlt } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
 const HeroSlide = ({ slide, isActive }) => {
@@ -26,13 +26,10 @@ const HeroSlide = ({ slide, isActive }) => {
         isActive ? "opacity-100 z-30" : "hidden"
       }`}>
       <div className="container mx-auto px-4 h-full flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-10 justify-center">
-        {/* Descripción y botones */}
         <div className="flex-1 text-white space-y-4 max-w-lg order-2 md:order-1">
           <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-orange-400">
             {slide.title}
           </h1>
-
-          {/* Rating con ícono */}
           <div className="flex items-center space-x-2 text-sm md:text-base text-gray-300">
             <FaShieldAlt className="text-gray-300" />
             <p>{slide.rating}</p>
@@ -48,9 +45,8 @@ const HeroSlide = ({ slide, isActive }) => {
               <span>COMENZAR A VER E1</span>
             </button>
 
-            {/* Ícono de Favoritos con tooltip */}
             <div className="relative group cursor-pointer flex items-center justify-center">
-              <FiBookmark
+              <FaBookmark
                 size={28}
                 className="text-white hover:text-orange-500 transition-all"
               />
@@ -61,7 +57,6 @@ const HeroSlide = ({ slide, isActive }) => {
           </div>
         </div>
 
-        {/* Imagen del anime */}
         <div className="flex justify-center order-1 md:order-2">
           <img
             src={slide.image}

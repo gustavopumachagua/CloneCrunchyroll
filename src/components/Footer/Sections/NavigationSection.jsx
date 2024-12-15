@@ -1,24 +1,22 @@
 import { navigationItems } from "../footerItems";
 import { FooterSection } from "../FooterSection/index";
-import { useNavigate } from "react-router-dom"; // Importar useNavigate
+import { useNavigate } from "react-router-dom";
 
 const NavigationSection = () => {
   const navigate = useNavigate();
-
-  // Función para manejar el clic en los elementos
   const handleNavigation = (item) => {
     if (item === "Explorar lo más popular") {
-      navigate("/PopularAnime"); // Navegar a /register
+      navigate("/PopularAnime");
     } else if (item === "Explorar los Simulcasts") {
-      navigate("/SeasonalSimulcasts"); // Navegar a /acceder
+      navigate("/SeasonalSimulcasts");
     }
     if (item === "Calendario de lanzamientos") {
-      navigate("/ReleaseCalendar"); // Navegar a /register
+      navigate("/ReleaseCalendar");
     } else if (item === "Noticias") {
-      navigate("/NewsPage"); // Navegar a /acceder
+      navigate("/NewsPage");
     }
     if (item === "Juegos") {
-      navigate("/AnimeGames"); // Navegar a /register
+      navigate("/AnimeGames");
     }
   };
 
@@ -27,7 +25,7 @@ const NavigationSection = () => {
       title="Navegación"
       items={navigationItems.map((item) => ({
         name: item,
-        onClick: () => handleNavigation(item), // Agregar onClick para cada elemento
+        onClick: () => handleNavigation(item),
       }))}
     />
   );

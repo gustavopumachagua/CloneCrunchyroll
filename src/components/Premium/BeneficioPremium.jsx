@@ -5,7 +5,6 @@ const BeneficioPremium = ({ onExplorePlansClick }) => {
   return (
     <div className="bg-gradient-to-t from-gray-900 via-black to-gray-900 text-white py-16 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        {/* Imagen */}
         <div className="flex justify-center lg:justify-end">
           <img
             src={premiumImage}
@@ -13,8 +12,6 @@ const BeneficioPremium = ({ onExplorePlansClick }) => {
             className="rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 max-w-full"
           />
         </div>
-
-        {/* Texto */}
         <div className="text-center lg:text-left">
           <div className="flex items-center justify-center lg:justify-start mb-6">
             <FaPlane className="text-yellow-400 text-6xl" />

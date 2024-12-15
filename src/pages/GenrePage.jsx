@@ -163,7 +163,7 @@ const GenrePage = () => {
           subtitle: `${anime.type || "Desconocido"} | ${
             anime.episodes || "?"
           } episodios`,
-          animeData: anime, // Esto debería contener todos los datos necesarios
+          animeData: anime,
         }))}
       />
     </div>

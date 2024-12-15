@@ -42,7 +42,7 @@ export const fetchPopularAnimeWithEpisodes = async (retries = 3) => {
   } catch (err) {
     if (retries > 0 && err.response?.status === 429) {
       console.warn("Demasiadas solicitudes. Reintentando...");
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Retraso de 2 segundos
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       return fetchPopularAnimeWithEpisodes(retries - 1);
     }
     throw err;

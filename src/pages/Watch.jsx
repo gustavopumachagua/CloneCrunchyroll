@@ -17,7 +17,6 @@ const Watch = () => {
   const episodeListRef = useRef(null);
   const highlightedEpisodeRef = useRef(null);
 
-  // Scroll hacia la parte superior al cargar la página
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -68,7 +67,6 @@ const Watch = () => {
   return (
     <div className="bg-gray-900 text-white min-h-screen">
       <div className="max-w-5xl mx-auto p-6">
-        {/* Información del episodio actual */}
         <div className="flex flex-col lg:flex-row items-center bg-gray-800 rounded-lg shadow-lg overflow-hidden">
           <img
             src={animeImage}
@@ -93,7 +91,6 @@ const Watch = () => {
           </div>
         </div>
 
-        {/* Próximo episodio */}
         {nextEpisode && (
           <div
             onClick={() => handleEpisodeSelect(nextEpisode)}
@@ -122,7 +119,6 @@ const Watch = () => {
           </div>
         )}
 
-        {/* Botón para mostrar/ocultar episodios */}
         <div className="mt-6">
           <button
             onClick={() => setShowEpisodes((prev) => !prev)}
@@ -132,7 +128,6 @@ const Watch = () => {
           </button>
         </div>
 
-        {/* Lista de episodios */}
         {showEpisodes && (
           <div
             ref={episodeListRef}

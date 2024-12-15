@@ -5,9 +5,8 @@ const MusicVideos = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [selectedVideo, setSelectedVideo] = useState(null); // State para el video seleccionado
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
-  // Fetch data from Jikan API
   const fetchMusicVideos = async () => {
     try {
       const response = await fetch(
@@ -25,7 +24,6 @@ const MusicVideos = () => {
     }
   };
 
-  // Scroll to top on page load
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchMusicVideos();

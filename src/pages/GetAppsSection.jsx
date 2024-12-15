@@ -4,7 +4,7 @@ import aplicaciones from "../assets/image/aplicaciones.webp";
 
 const GetAppsSection = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll hacia arriba al cargar la página
+    window.scrollTo(0, 0);
   }, []);
 
   const appDetails = [
@@ -13,28 +13,24 @@ const GetAppsSection = () => {
       description:
         "Descarga nuestra app en la App Store y lleva el anime contigo.",
       icon: <FaApple className="text-blue-500 text-5xl" />,
-      link: "#", // Sustituye con el enlace a la App Store
     },
     {
       platform: "Android",
       description:
         "Disponible en Google Play para todos tus dispositivos Android.",
       icon: <FaAndroid className="text-green-500 text-5xl" />,
-      link: "#", // Sustituye con el enlace a Google Play
     },
     {
       platform: "Escritorio",
       description:
         "Accede desde tu computadora con nuestra aplicación de escritorio.",
       icon: <FaDesktop className="text-gray-500 text-5xl" />,
-      link: "#", // Sustituye con el enlace al sitio de descarga
     },
   ];
 
   return (
     <div className="bg-gray-900 text-white py-20 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Encabezado */}
         <h1 className="text-4xl font-bold text-center mb-8">
           Hazte con nuestras aplicaciones
         </h1>
@@ -44,7 +40,6 @@ const GetAppsSection = () => {
           contenido de anime!
         </p>
 
-        {/* Imagen principal */}
         <div className="mb-12">
           <img
             src={aplicaciones}
@@ -53,7 +48,6 @@ const GetAppsSection = () => {
           />
         </div>
 
-        {/* Detalles de las aplicaciones */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {appDetails.map((app, index) => (
             <a
@@ -71,7 +65,6 @@ const GetAppsSection = () => {
           ))}
         </div>
 
-        {/* Llamado a la acción */}
         <div className="mt-16 text-center">
           <h2 className="text-3xl font-bold mb-6">
             ¡Empieza a disfrutar donde quieras!

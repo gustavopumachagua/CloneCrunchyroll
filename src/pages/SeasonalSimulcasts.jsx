@@ -14,7 +14,6 @@ const SeasonalSimulcasts = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Fetch data from Jikan API
   const fetchSimulcasts = async () => {
     try {
       const response = await fetch("https://api.jikan.moe/v4/seasons/now");
@@ -30,7 +29,6 @@ const SeasonalSimulcasts = () => {
     }
   };
 
-  // Scroll to top on page load
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchSimulcasts();
@@ -74,11 +72,13 @@ const SeasonalSimulcasts = () => {
           <div
             key={anime.mal_id}
             className="bg-gray-800 shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
-            <img
-              src={anime.images?.jpg?.large_image_url}
-              alt={anime.title}
-              className="w-full h-56 object-cover"
-            />
+            <div className="flex justify-center">
+              <img
+                src={anime.images?.jpg?.large_image_url}
+                alt={anime.title}
+                className="w-40 h-auto object-cover"
+              />
+            </div>
             <div className="p-4 flex-grow flex flex-col justify-between">
               <h2 className="text-lg font-semibold text-white mb-2">
                 {anime.title}

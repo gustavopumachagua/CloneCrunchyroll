@@ -14,7 +14,6 @@ const GenreListPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Efecto para desplazarse al inicio de la página
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -70,11 +69,11 @@ const GenreListPage = () => {
             key={anime.mal_id}
             onClick={() => handleSelectAnime(anime)}
             className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition hover:bg-gray-700 cursor-pointer">
-            <div className="relative h-64 md:h-72 rounded-lg overflow-hidden shadow-md">
+            <div className="flex justify-center">
               <img
                 src={anime.images?.jpg?.large_image_url || "/default-image.jpg"}
                 alt={anime.title}
-                className="w-full h-full object-cover"
+                className="w-40 h-auto object-cover"
               />
             </div>
             <div className="mt-3 space-y-1">

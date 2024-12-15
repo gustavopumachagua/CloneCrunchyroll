@@ -16,7 +16,7 @@ const Carousel = ({ slides }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       handleNext();
-    }, 10000); // Cambio automático cada 10 segundos
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -30,7 +30,6 @@ const Carousel = ({ slides }) => {
         />
       ))}
 
-      {/* Botones de navegación */}
       <button
         onClick={handlePrev}
         aria-label="Anterior"
@@ -44,7 +43,6 @@ const Carousel = ({ slides }) => {
         <FaChevronRight size={24} />
       </button>
 
-      {/* Indicadores */}
       <div className="absolute bottom-16 md:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
         {slides.map((_, index) => (
           <div

@@ -11,7 +11,6 @@ const UserMenu = () => {
     setIsOpen((prev) => !prev);
   };
 
-  // Cerrar el menú al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -28,7 +27,6 @@ const UserMenu = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Deshabilitar el scroll cuando el menú está abierto
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
@@ -38,7 +36,6 @@ const UserMenu = () => {
 
   return (
     <div className="relative">
-      {/* Botón de Usuario */}
       <button
         ref={buttonRef}
         onClick={toggleMenu}
@@ -48,24 +45,21 @@ const UserMenu = () => {
         <FiUser size={22} title="Menú de la cuenta" />
       </button>
 
-      {/* Fondo detrás del menú */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/75 z-40 transition-opacity duration-300"
-          style={{ top: "4rem" }} // Ajusta la altura del header (ejemplo: 4rem para h-16)
+          style={{ top: "4rem" }}
           onClick={close}
-          aria-hidden="true" // Indica que este fondo no es interactivo para lectores de pantalla
-        ></div>
+          aria-hidden="true"></div>
       )}
 
-      {/* Menú desplegable */}
       {isOpen && (
         <div
           id="user-menu"
           ref={menuRef}
           className="fixed top-16 right-0  bg-gray-900 z-50 overflow-y-auto shadow-lg border border-gray-700 animate-slide-down"
           style={{
-            height: "calc(100vh - 4rem)", // Resta la altura del header (por ejemplo, 4rem)
+            height: "calc(100vh - 4rem)",
           }}>
           <AccountMenu />
         </div>

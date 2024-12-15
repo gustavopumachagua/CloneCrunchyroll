@@ -35,7 +35,7 @@ const SearchBar = () => {
       } catch (err) {
         if (retries > 0 && err.response?.status === 429) {
           console.warn("Demasiadas solicitudes. Reintentando...");
-          setTimeout(() => fetchData(retries - 1), 2000); // Retraso de 2 segundos
+          setTimeout(() => fetchData(retries - 1), 2000);
         } else {
           setError("Hubo un problema al obtener los resultados.");
           console.error(err);
@@ -49,7 +49,6 @@ const SearchBar = () => {
     return () => clearTimeout(delayDebounce);
   }, [query]);
 
-  // Efecto para desplazar el scroll hacia arriba al cargar o cambiar los resultados
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [results]);
@@ -98,13 +97,13 @@ const SearchBar = () => {
                 key={anime.mal_id}
                 onClick={() => handleSelectAnime(anime)}
                 className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition hover:bg-gray-700 cursor-pointer">
-                <div className="relative h-64 md:h-72 rounded-lg overflow-hidden shadow-md">
+                <div className="flex justify-center">
                   <img
                     src={
                       anime.images?.jpg?.large_image_url || "/default-image.jpg"
-                    } // Imagen por defecto
+                    }
                     alt={anime.title}
-                    className="w-full h-full object-cover"
+                    className="w-40 h-auto object-cover"
                   />
                 </div>
                 <div className="mt-3 space-y-1">

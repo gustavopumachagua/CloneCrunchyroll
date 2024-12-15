@@ -1,25 +1,21 @@
-import ProfilePicture from "./ProfilePicture";
+import {
+  BackgroundImage,
+  ProfilePicture,
+} from "../components/EditProfile/index";
 
-const EditProfile = () => {
+const ProfilesPage = () => {
   return (
     <div className="bg-black text-white max-w-md mx-auto md:max-w-lg lg:max-w-2xl rounded-lg overflow-hidden">
-      {/* Encabezado */}
       <div className="text-center p-6">
         <h1 className="text-2xl font-bold">Editar perfil</h1>
       </div>
 
-      {/* Imagen de fondo y perfil */}
-      <div
-        className="relative bg-cover bg-center h-40 md:h-48"
-        style={{
-          backgroundImage: "url('https://via.placeholder.com/600x200')",
-        }}>
+      <div className="relative">
+        <BackgroundImage />
         <ProfilePicture />
       </div>
 
-      {/* Formulario */}
       <div className="p-6">
-        {/* Nombre del perfil */}
         <div className="mb-6">
           <label className="block text-gray-400 text-sm mb-2">
             Nombre del perfil
@@ -35,7 +31,6 @@ const EditProfile = () => {
           </p>
         </div>
 
-        {/* Nombre de usuario */}
         <div className="mb-6">
           <label className="block text-gray-400 text-sm mb-2">
             Nombre de usuario (Opcional)
@@ -52,7 +47,6 @@ const EditProfile = () => {
           </p>
         </div>
 
-        {/* Botones */}
         <div className="flex justify-between mt-6">
           <button className="bg-gray-800 text-white px-6 py-2 rounded-md hover:bg-gray-700 transition">
             GUARDAR
@@ -66,4 +60,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default ProfilesPage;

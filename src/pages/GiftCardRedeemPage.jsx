@@ -4,14 +4,12 @@ import regalo from "../assets/image/regalo.avif";
 
 const GiftCardRedeemPage = () => {
   useEffect(() => {
-    // Llevar al usuario al inicio de la página al cargar
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className="bg-gray-900 text-white min-h-screen py-20 px-6">
       <div className="max-w-4xl mx-auto">
-        {/* Título */}
         <div className="text-center mb-10">
           <FaGift className="text-orange-500 text-5xl mx-auto mb-4" />
           <h1 className="text-4xl font-bold">Canjear Tarjeta Regalo</h1>
@@ -20,10 +18,7 @@ const GiftCardRedeemPage = () => {
             exclusivos.
           </p>
         </div>
-
-        {/* Contenido principal */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          {/* Imagen representativa */}
           <div className="flex justify-center">
             <img
               src={regalo}
@@ -32,7 +27,6 @@ const GiftCardRedeemPage = () => {
             />
           </div>
 
-          {/* Formulario */}
           <div>
             <h2 className="text-2xl font-bold mb-4">Ingresa tu código</h2>
             <form className="space-y-4">
@@ -61,7 +55,6 @@ const GiftCardRedeemPage = () => {
           </div>
         </div>
 
-        {/* Beneficios */}
         <div className="mt-12">
           <h2 className="text-2xl font-bold mb-6">
             Beneficios que puedes obtener

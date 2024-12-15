@@ -6,7 +6,6 @@ const Submenu = ({ title, items, isOpen, toggle }) => {
 
   return (
     <li className="relative">
-      {/* Título del submenú */}
       <div
         onClick={toggle}
         onKeyDown={(e) => {
@@ -25,8 +24,6 @@ const Submenu = ({ title, items, isOpen, toggle }) => {
           }`}
         />
       </div>
-
-      {/* Contenido del submenú */}
       <ul
         className={`pl-4 mt-2 text-gray-400 overflow-hidden transition-all duration-300 ${
           isOpen ? "max-h-screen" : "max-h-0"

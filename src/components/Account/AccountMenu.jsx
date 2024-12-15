@@ -11,7 +11,7 @@ const AccountMenu = () => {
       <MenuItem
         title="Crear cuenta"
         description="Suscríbete gratis o hazte Premium."
-        onClick={() => navigate("/register")} // Redirige al hacer clic
+        onClick={() => navigate("/register")}
       />
 
       {/* Acceder */}
@@ -29,10 +29,7 @@ const AccountMenu = () => {
       />
 
       {/* Botón de prueba gratuita */}
-      <PremiumButton 
-      title="Premium"
-      onClick={() => navigate("/premium")}
-      />
+      <PremiumButton title="Premium" onClick={() => navigate("/premium")} />
     </div>
   );
 };

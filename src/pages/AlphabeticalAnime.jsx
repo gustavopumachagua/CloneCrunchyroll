@@ -9,13 +9,11 @@ const AlphabeticalAnime = () => {
   const [error, setError] = useState("");
   const [selectedLetter, setSelectedLetter] = useState("");
   const navigate = useNavigate();
-
-  // Función para obtener todos los animes paginados
   const fetchAnimes = async () => {
     try {
       let fetchedAnimes = [];
       for (let page = 1; page <= 10; page++) {
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Esperar 2 segundos
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         const response = await fetch(
           `https://api.jikan.moe/v4/anime?order_by=title&sort=asc&page=${page}`
         );
@@ -37,13 +35,12 @@ const AlphabeticalAnime = () => {
     }
   };
 
-  // Función para filtrar por letra
   const filterByLetter = (letter) => {
     setSelectedLetter(letter);
     setFilteredAnimes(
       animes.filter((anime) => {
-        const title = anime.title || ""; // Manejo de valores nulos
-        const normalizedTitle = title.replace(/^[^a-zA-Z]+/, ""); // Elimina caracteres iniciales no alfabéticos
+        const title = anime.title || "";
+        const normalizedTitle = title.replace(/^[^a-zA-Z]+/, "");
         return normalizedTitle.toLowerCase().startsWith(letter.toLowerCase());
       })
     );
@@ -54,7 +51,6 @@ const AlphabeticalAnime = () => {
     fetchAnimes();
   }, []);
 
-  // Navegar a detalles del anime
   const handleViewDetails = (anime) => {
     navigate("/series", { state: { anime } });
   };
@@ -112,11 +108,13 @@ const AlphabeticalAnime = () => {
           <div
             key={`${anime.mal_id}-${index}`}
             className="bg-gray-800 shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
-            <img
-              src={anime.images.jpg.large_image_url}
-              alt={anime.title}
-              className="w-full h-56 object-cover"
-            />
+            <div className="flex justify-center">
+              <img
+                src={anime.images.jpg.large_image_url}
+                alt={anime.title}
+                className="w-40 h-auto object-cover"
+              />
+            </div>
             <div className="p-4 flex-grow flex flex-col justify-between">
               <h2 className="text-lg font-semibold text-white mb-2">
                 {anime.title}

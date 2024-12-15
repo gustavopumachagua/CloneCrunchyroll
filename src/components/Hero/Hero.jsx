@@ -27,7 +27,7 @@ const Hero = () => {
   return (
     <section className="relative bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
       {loading ? (
-        <p className="text-gray-400 text-center py-10">Cargando...</p>
+        <p className="text-gray-400 text-center py-20">Cargando...</p>
       ) : error ? (
         <p className="text-red-500 text-center py-10">{error}</p>
       ) : (

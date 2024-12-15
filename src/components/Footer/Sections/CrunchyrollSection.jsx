@@ -1,37 +1,34 @@
-import { useNavigate } from "react-router-dom"; // Importar useNavigate
+import { useNavigate } from "react-router-dom";
 import { crunchyrollItems } from "../footerItems";
 import { FooterSection } from "../FooterSection/index";
 
 const CrunchyrollSection = () => {
   const navigate = useNavigate();
-
-  // Función para manejar el clic en los elementos
   const handleNavigation = (item) => {
     if (item === "Comienza tu Prueba Gratuita") {
-      navigate("/premium"); // Navegar a /register
+      navigate("/premium");
     } else if (item === "Acerca") {
-      navigate("/Acerca"); // Navegar a /acceder
+      navigate("/Acerca");
     }
     if (item === "Centro de ayuda") {
-      navigate("/centroayuda"); // Navegar a /register
+      navigate("/centroayuda");
     } else if (item === "Términos de Uso") {
-      navigate("/terminouso"); // Navegar a /acceder
+      navigate("/terminouso");
     }
-
     if (item === "Política de Privacidad") {
-      navigate("/politicaprivacidad"); // Navegar a /register
+      navigate("/politicaprivacidad");
     } else if (item === "Herramienta de aceptación de cookies") {
-      navigate("/cookies"); // Navegar a /acceder
+      navigate("/cookies");
     }
     if (item === "Contacto de prensa") {
-      navigate("/contactoprensa"); // Navegar a /register
+      navigate("/contactoprensa");
     } else if (item === "Hazte con nuestras aplicaciones") {
-      navigate("/aplicaciones"); // Navegar a /acceder
+      navigate("/aplicaciones");
     }
     if (item === "Canjear Tarjeta Regalo") {
-      navigate("/canjeartarjeta"); // Navegar a /register
+      navigate("/canjeartarjeta");
     } else if (item === "Empleo") {
-      navigate("/empleo"); // Navegar a /acceder
+      navigate("/empleo");
     }
   };
   return (
@@ -39,7 +36,7 @@ const CrunchyrollSection = () => {
       title="Crunchyroll"
       items={crunchyrollItems.map((item) => ({
         name: item,
-        onClick: () => handleNavigation(item), // Agregar onClick para cada elemento
+        onClick: () => handleNavigation(item),
       }))}
     />
   );

@@ -4,7 +4,7 @@ import contacto from "../assets/image/contacto.png";
 
 const PressContact = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll hacia arriba al cargar la página
+    window.scrollTo(0, 0);
   }, []);
 
   const contactDetails = [
@@ -28,7 +28,6 @@ const PressContact = () => {
   return (
     <div className="bg-gray-900 text-white py-20 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Encabezado */}
         <h1 className="text-4xl font-bold text-center mb-8">
           Contacto de Prensa
         </h1>
@@ -36,8 +35,6 @@ const PressContact = () => {
           Si eres periodista o tienes alguna consulta relacionada con la prensa,
           no dudes en contactarnos a través de los siguientes medios.
         </p>
-
-        {/* Imagen principal */}
         <div className="mb-12">
           <img
             src={contacto}
@@ -45,8 +42,6 @@ const PressContact = () => {
             className="rounded-lg shadow-md mx-auto w-full md:w-3/4 lg:w-1/2"
           />
         </div>
-
-        {/* Detalles de Contacto */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {contactDetails.map((contact, index) => (
             <div
@@ -59,7 +54,6 @@ const PressContact = () => {
           ))}
         </div>
 
-        {/* Formulario de Contacto */}
         <div className="mt-16">
           <h2 className="text-3xl font-bold mb-6 text-center">
             Envíanos un Mensaje
