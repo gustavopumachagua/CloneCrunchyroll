@@ -51,41 +51,30 @@ const Dropdown = ({ name, options, isActive, toggle, close }) => {
   };
 
   const handleOptionClick = (option) => {
+    const genreId = genreMap[option];
+
     if (option === "Todas las noticias") {
       navigate("/NewsPage");
-    } else {
-      const genreId = genreMap[option];
-      if (genreId) {
-        navigate(`/genre/${genreId}`);
-      }
-      if (option === "Anime Awards") {
-        navigate("/AnimeAwards");
-      }
-      if (option === "Eventos y experiencias") {
-        navigate("/EventsAndExperiences");
-      }
-      if (option === "Popular") {
-        navigate("/PopularAnime");
-      }
-      if (option === "Novedades") {
-        navigate("/Novedades");
-      }
-      if (option === "Alfabético") {
-        navigate("/Alfabetico");
-      }
-      if (option === "Temporada de Simulcats") {
-        navigate("/SeasonalSimulcasts");
-      }
-      if (option === "Calendario de Lanzamientos") {
-        navigate("/ReleaseCalendar");
-      }
-      if (option === "Videos musicales y conciertos") {
-        navigate("/MusicVideos");
-      }
-      if (option === "Juegos") {
-        navigate("/AnimeGames");
-      }
+    } else if (genreId) {
+      navigate(`/genre/${genreId}`);
+    } else if (option === "Anime Awards") {
+      navigate("/AnimeAwards");
+    } else if (option === "Eventos y experiencias") {
+      navigate("/EventsAndExperiences");
+    } else if (option === "Popular") {
+      navigate("/PopularAnime");
+    } else if (option === "Novedades") {
+      navigate("/Novedades");
+    } else if (option === "Alfabético") {
+      navigate("/Alfabetico");
+    } else if (option === "Temporada de Simulcats") {
+      navigate("/SeasonalSimulcasts");
+    } else if (option === "Calendario de Lanzamientos") {
+      navigate("/ReleaseCalendar");
+    } else if (option === "Videos musicales y conciertos") {
+      navigate("/MusicVideos");
     }
+
     close?.();
   };
 

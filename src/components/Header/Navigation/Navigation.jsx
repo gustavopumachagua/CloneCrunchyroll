@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Dropdown } from "../HeaderDesktop/index";
+import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const navItems = [
@@ -63,6 +64,23 @@ const Navigation = () => {
     setActiveDropdown(activeDropdown === index ? null : index);
   };
 
+  const closeAllDropdowns = () => {
+    setActiveDropdown(null);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".dropdown-container")) {
+        closeAllDropdowns();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const navigate = useNavigate();
+
   return (
     <nav role="menu" className="flex flex-col md:flex-row md:space-x-8">
       {navItems.map((item, index) => (
@@ -72,12 +90,20 @@ const Navigation = () => {
           role="menuitem"
           aria-haspopup={!!item.dropdown.length}
           aria-expanded={activeDropdown === index}>
-          <Dropdown
-            name={item.name}
-            options={item.dropdown}
-            isActive={activeDropdown === index}
-            toggle={() => toggleDropdown(index)}
-          />
+          {item.name === "Juegos" ? (
+            <div
+              className="flex items-center text-white hover:text-gray-300 cursor-pointer"
+              onClick={() => navigate("/AnimeGames")}>
+              {item.name}
+            </div>
+          ) : (
+            <Dropdown
+              name={item.name}
+              options={item.dropdown}
+              isActive={activeDropdown === index}
+              toggle={() => toggleDropdown(index)}
+            />
+          )}
         </li>
       ))}
     </nav>

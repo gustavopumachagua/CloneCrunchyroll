@@ -37,11 +37,11 @@ const AccederPage = () => {
               required
             />
             <p className="text-xs text-gray-500 mt-1">
-              <a
-                href="#"
+              <Link
+                to="/resetpassword"
                 className="text-orange-500 hover:text-orange-400 underline">
                 ¿Has olvidado tu contraseña?
-              </a>
+              </Link>
             </p>
           </div>
           <button

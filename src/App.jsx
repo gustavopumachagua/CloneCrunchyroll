@@ -36,6 +36,7 @@ import GiftCardRedeemPage from "./pages/GiftCardRedeemPage";
 import EventsAndExperiences from "./pages/EventsAndExperiences";
 import FooterAccount from "./components/Account/FooterAccount";
 import HeaderAccount from "./components/Account/HeaderAccount";
+import ResetPassword from "./pages/ResetPassword";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -163,6 +164,18 @@ const App = () => {
                 <HeaderAccount />
                 <div className="min-h-screen bg-gray-900 text-white p-4">
                   <AccederPage />
+                </div>
+                <FooterAccount />
+              </>
+            }
+          />
+          <Route
+            path="/resetpassword"
+            element={
+              <>
+                <HeaderAccount />
+                <div className="min-h-screen bg-gray-900 text-white p-4">
+                  <ResetPassword />
                 </div>
                 <FooterAccount />
               </>

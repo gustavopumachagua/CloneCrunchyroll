@@ -65,8 +65,8 @@ const Watch = () => {
   const nextEpisode = episodes[currentIndex + 1];
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen">
-      <div className="max-w-5xl mx-auto p-6">
+    <div className="bg-gray-900 text-white min-h-screen py-16">
+      <div className="max-w-5xl mx-auto p-6 ">
         <div className="flex flex-col lg:flex-row items-center bg-gray-800 rounded-lg shadow-lg overflow-hidden">
           <img
             src={animeImage}

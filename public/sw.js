@@ -2,20 +2,26 @@ const CACHE_NAME = "anime-app-cache-v1";
 const urlsToCache = [
   "/",
   "/index.html",
-  "/favicon.ico",
+  "/Logo.svg",
   "/manifest.json",
-  "/icon-192x192.png",
-  "/icon-512x512.png",
+  "/manifest.webmanifest",
+  "/perfil_logo.png",
   "/dist/assets/index.css",
   "/dist/assets/index.js",
-  "/Logo.svg",
+  "/sw.js",
 ];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("Archivos en caché correctamente");
-      return cache.addAll(urlsToCache);
+      console.log("Intentando almacenar en caché los archivos...");
+      return Promise.all(
+        urlsToCache.map((url) =>
+          cache.add(url).catch((error) => {
+            console.error(`Error al almacenar ${url} en la caché:`, error);
+          })
+        )
+      );
     })
   );
 });

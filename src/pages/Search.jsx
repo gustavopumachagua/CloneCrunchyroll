@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -16,6 +16,11 @@ const SearchBar = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (!query.trim()) {
@@ -64,6 +69,7 @@ const SearchBar = () => {
       <div className="w-full max-w-4xl mt-24">
         <div className="relative flex items-center">
           <input
+            ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
