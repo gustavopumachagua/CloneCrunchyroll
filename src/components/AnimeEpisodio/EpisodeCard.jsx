@@ -1,6 +1,9 @@
 import { FaCalendarAlt, FaStar, FaPlay } from "react-icons/fa";
+import { useHistory } from "../../context/HistoryContext";
 
 const EpisodeCard = ({ episode, animeImage, index, onPlayClick }) => {
+  const { addToHistory } = useHistory();
+
   const formatDate = (dateString) => {
     if (!dateString) return "Desconocido";
     const date = new Date(dateString);
@@ -9,6 +12,11 @@ const EpisodeCard = ({ episode, animeImage, index, onPlayClick }) => {
     )
       .toString()
       .padStart(2, "0")}/${date.getFullYear()}`;
+  };
+
+  const handlePlayClick = () => {
+    addToHistory({ ...episode, animeImage, episodeNumber: index + 1 });
+    onPlayClick(episode);
   };
 
   return (
@@ -35,7 +43,7 @@ const EpisodeCard = ({ episode, animeImage, index, onPlayClick }) => {
           Score: {episode.score || "N/A"}
         </p>
         <button
-          onClick={() => onPlayClick(episode)}
+          onClick={handlePlayClick}
           className="mt-4 flex items-center justify-center px-4 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 transition-all w-full">
           <FaPlay className="mr-2" />
           Reproducir E{index + 1}

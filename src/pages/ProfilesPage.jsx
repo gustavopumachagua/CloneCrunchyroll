@@ -2,8 +2,33 @@ import {
   BackgroundImage,
   ProfilePicture,
 } from "../components/EditProfile/index";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const ProfilesPage = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+  const navigate = useNavigate();
+  const { user, updateProfile } = useAuth();
+  const [name, setName] = useState(user?.name || "");
+  const [avatar, setAvatar] = useState(user?.avatar || "");
+  const [backgroundImage, setBackgroundImage] = useState(
+    user?.backgroundImage || ""
+  );
+
+  const handleSave = async () => {
+    const updatedData = { name, avatar, backgroundImage };
+    const result = await updateProfile(updatedData);
+    if (result.success) {
+      // Redirige con el mensaje de éxito
+      navigate("/", {
+        state: { successMessage: "Perfil actualizado correctamente" },
+      });
+    }
+  };
+
   return (
     <div className="bg-black text-white max-w-md mx-auto md:max-w-lg lg:max-w-2xl rounded-lg overflow-hidden">
       <div className="text-center p-6">
@@ -11,8 +36,11 @@ const ProfilesPage = () => {
       </div>
 
       <div className="relative">
-        <BackgroundImage />
-        <ProfilePicture />
+        <BackgroundImage
+          backgroundImage={backgroundImage}
+          setBackgroundImage={setBackgroundImage}
+        />
+        <ProfilePicture avatar={avatar} setAvatar={setAvatar} />
       </div>
 
       <div className="p-6">
@@ -22,7 +50,8 @@ const ProfilesPage = () => {
           </label>
           <input
             type="text"
-            defaultValue="GussDev"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="w-full bg-gray-800 text-white p-3 rounded-md border border-gray-700 focus:outline-none focus:border-orange-500"
           />
           <p className="text-sm text-gray-500 mt-1">
@@ -31,27 +60,15 @@ const ProfilesPage = () => {
           </p>
         </div>
 
-        <div className="mb-6">
-          <label className="block text-gray-400 text-sm mb-2">
-            Nombre de usuario (Opcional)
-          </label>
-          <input
-            type="text"
-            defaultValue="GussDev"
-            className="w-full bg-gray-800 text-white p-3 rounded-md border border-gray-700 focus:outline-none focus:border-orange-500"
-          />
-          <p className="text-sm text-gray-500 mt-1">
-            Crea un nombre de usuario para futuras experiencias que compartirán
-            tu amor por el anime. ¡Elige uno que te encante, no se podrá
-            cambiar!
-          </p>
-        </div>
-
         <div className="flex justify-between mt-6">
-          <button className="bg-gray-800 text-white px-6 py-2 rounded-md hover:bg-gray-700 transition">
+          <button
+            onClick={handleSave}
+            className="bg-gray-800 text-white px-6 py-2 rounded-md hover:bg-gray-700 transition">
             GUARDAR
           </button>
-          <button className="bg-transparent text-orange-500 px-6 py-2 rounded-md border border-orange-500 hover:bg-orange-500 hover:text-black transition">
+          <button
+            className="bg-transparent text-orange-500 px-6 py-2 rounded-md border border-orange-500 hover:bg-orange-500 hover:text-black transition"
+            onClick={() => navigate("/")}>
             CANCELAR
           </button>
         </div>

@@ -1,73 +1,90 @@
 import { useState } from "react";
+import Sidebar from "../components/Crunchylists/Sidebar";
+import DashboardContent from "../components/Crunchylists/DashboardContent";
+import CreateListModal from "../components/Crunchylists/Modals/CreateListModal";
+import RenameListModal from "../components/Crunchylists/Modals/RenameListModal";
+import DeleteListModal from "../components/Crunchylists/Modals/DeleteListModal";
+
 const Crunchylists = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [listName, setListName] = useState("");
+  const [newListName, setNewListName] = useState("");
   const [error, setError] = useState("");
+  const [showDashboard, setShowDashboard] = useState(false);
+  const [animeList, setAnimeList] = useState([]);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setListName("");
-    setError("");
+  const handleAddAnime = (anime) => {
+    setAnimeList((prev) => [...prev, anime]); // Añadir nuevo anime
   };
 
-  const handleCreateList = () => {
-    if (listName.trim() === "") {
-      setError("El nombre de la lista es obligatorio.");
-      return;
-    }
-    console.log("Lista creada:", listName);
-    closeModal();
+  const handleRemoveAnime = (animeId) => {
+    setAnimeList((prev) => prev.filter((anime) => anime.mal_id !== animeId)); // Eliminar anime por ID
   };
 
   return (
-    <div className="text-center mt-10">
-      <h2 className="text-white text-lg">Tus Crunchylists están vacías.</h2>
-      <button
-        onClick={openModal}
-        className="mt-4 bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition">
-        Crear una nueva lista
-      </button>
-
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-gray-800 text-white p-6 rounded-md w-96 relative">
-            <h3 className="text-lg font-bold mb-4 text-center">
-              Crear Crunchylista
-            </h3>
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white text-lg">
-              ✖
-            </button>
-            <div className="mb-4">
-              <label htmlFor="listName" className="block text-sm mb-2">
-                Nombre de la Lista
-              </label>
-              <input
-                id="listName"
-                type="text"
-                value={listName}
-                onChange={(e) => setListName(e.target.value)}
-                className="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:border-orange-500 focus:ring-orange-500"
-              />
-              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-            </div>
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={handleCreateList}
-                className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition">
-                Crear Lista
-              </button>
-              <button
-                onClick={closeModal}
-                className="px-4 py-2 rounded-md border border-gray-500 text-white hover:bg-gray-700 transition">
-                Cancelar
-              </button>
-            </div>
-          </div>
+    <div className="min-h-screen bg-black text-white">
+      {!showDashboard ? (
+        <div className="text-center mt-10">
+          <h2 className="text-2xl font-semibold">
+            Tus Crunchylists están vacías.
+          </h2>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="mt-6 bg-orange-500 text-white px-6 py-3 rounded-md text-lg hover:bg-orange-600 transition">
+            Crear una nueva lista
+          </button>
+        </div>
+      ) : (
+        <div className="flex flex-col lg:flex-row lg:items-start h-screen">
+          <Sidebar listName={listName} onAddAnime={handleAddAnime} />
+          <DashboardContent
+            animeList={animeList}
+            onRemoveAnime={handleRemoveAnime}
+            setShowDashboard={setShowDashboard}
+            setIsRenameModalOpen={setIsRenameModalOpen}
+            setIsDeleteModalOpen={setIsDeleteModalOpen}
+          />
         </div>
       )}
+
+      {/* Modales */}
+      <CreateListModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        listName={listName}
+        setListName={setListName}
+        setError={setError}
+        setShowDashboard={setShowDashboard}
+        error={error}
+      />
+      <RenameListModal
+        isOpen={isRenameModalOpen}
+        closeModal={() => setIsRenameModalOpen(false)}
+        currentName={listName} // Pasar el nombre actual
+        setNewListName={setNewListName}
+        newListName={newListName}
+        handleRename={() => {
+          if (newListName.trim() === "") {
+            alert("El nombre de la lista no puede estar vacío.");
+            return;
+          }
+          setListName(newListName);
+          setIsRenameModalOpen(false);
+        }}
+      />
+
+      <DeleteListModal
+        isOpen={isDeleteModalOpen}
+        closeModal={() => setIsDeleteModalOpen(false)}
+        handleDelete={() => {
+          setListName(""); // Borra el nombre de la lista
+          setAnimeList([]);
+          setShowDashboard(false); // Regresa a la pantalla inicial
+          setIsDeleteModalOpen(false); // Cierra el modal
+        }}
+      />
     </div>
   );
 };

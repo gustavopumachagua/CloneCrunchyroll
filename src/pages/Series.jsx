@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   FaStar,
   FaPlus,
@@ -9,17 +9,27 @@ import {
 } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa6";
 import AnimeEpisodes from "../components/AnimeEpisodio/AnimeEpisodes";
+import { useAuth } from "../context/AuthContext";
 
 const Series = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const anime = location.state?.anime;
 
   const [showFullSynopsis, setShowFullSynopsis] = useState(false);
+  const { user, setUser } = useAuth();
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isLoading] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+  useEffect(() => {
+    // Sincroniza solo al montar o si `anime.mal_id` cambia
+    setIsFavorite(
+      user?.favorites?.some((fav) => fav.animeId === anime?.mal_id) || false
+    );
+  }, [anime?.mal_id, user?.favorites]);
 
   if (!anime) {
     return (
@@ -30,6 +40,61 @@ const Series = () => {
   }
 
   const toggleSynopsis = () => setShowFullSynopsis(!showFullSynopsis);
+
+  const toggleFavorite = async () => {
+    // Cambiar estado local antes de la solicitud
+    setIsFavorite((prev) => !prev);
+
+    try {
+      const response = await fetch(
+        "http://localhost:5005/api/users/favorites/toggle",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            animeId: anime.mal_id,
+            title: anime.title,
+            image: anime.images?.jpg?.large_image_url || anime.image,
+            subtitle:
+              anime.subtitle ||
+              `${anime.type} | ${anime.episodes || "?"} episodios`,
+            score: anime.score || null,
+            scored_by: anime.scored_by || null,
+            rating: anime.rating || null,
+            synopsis: anime.synopsis || null,
+            type: anime.type || null,
+            episodes: anime.episodes || null,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Actualizar la lista de favoritos del usuario
+        setUser((prevUser) => ({
+          ...prevUser,
+          favorites: Array.isArray(data.favorites) ? data.favorites : [],
+        }));
+
+        // Actualizar `isFavorite` con la respuesta del servidor
+        setIsFavorite(
+          data.favorites.some((fav) => fav.animeId === anime.mal_id)
+        );
+      } else {
+        console.error(data.message);
+        // Revertir el estado en caso de error
+        setIsFavorite((prev) => !prev);
+      }
+    } catch (error) {
+      console.error("Error al actualizar favoritos:", error);
+      // Revertir el estado en caso de error
+      setIsFavorite((prev) => !prev);
+    }
+  };
 
   return (
     <div className="bg-gray-900 text-white min-h-screen p-6 py-20">
@@ -51,7 +116,7 @@ const Series = () => {
             {anime.title || "Título no disponible"}
           </h1>
           <div className="flex flex-wrap items-center space-x-4 text-sm lg:text-lg">
-            <div className="flex items-center ">
+            <div className="flex items-center">
               <FaRegClosedCaptioning className="text-gray-400 mr-2" size={16} />
               <p>
                 {anime.subtitle ||
@@ -88,9 +153,24 @@ const Series = () => {
           </div>
 
           <div className="flex flex-col space-y-4 mt-4 items-center sm:flex-row sm:space-y-0 sm:space-x-4 sm:justify-start">
-            <button className="flex items-center justify-center bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full shadow-md transition-transform transform hover:scale-105 w-full sm:w-auto">
-              <FaBookmark className="mr-2" size={20} /> Añadir a Favoritos
+            <button
+              disabled={isLoading}
+              className={`flex items-center justify-center px-4 py-2 rounded-full shadow-md transition-transform transform hover:scale-105 w-full sm:w-auto ${
+                isFavorite
+                  ? "bg-orange-500 text-gray-900" // Pintado si es favorito
+                  : "bg-gray-700 text-white" // Sin pintar si no es favorito
+              } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+              onClick={toggleFavorite}>
+              <FaBookmark className="mr-2" size={20} />
+              <span>
+                {isLoading
+                  ? "Cargando..."
+                  : isFavorite
+                  ? "Eliminar de Favoritos" // Texto si ya es favorito
+                  : "Añadir a Favoritos"}{" "}
+              </span>
             </button>
+
             <button className="flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-full shadow-md transition-transform transform hover:scale-105 w-full sm:w-auto">
               <FaPlus className="mr-2" size={20} /> Añadir a CrunchyLista
             </button>

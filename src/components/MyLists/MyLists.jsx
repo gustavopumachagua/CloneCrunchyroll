@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FaRegBookmark } from "react-icons/fa";
 import { MdFavorite, MdHistory, MdListAlt } from "react-icons/md";
 import Favoritos from "../../pages/Watchlist";
@@ -6,7 +7,15 @@ import Crunchylistas from "../../pages/Crunchylists";
 import Historial from "../../pages/History";
 
 const MyLists = () => {
-  const [activeTab, setActiveTab] = useState("FAVORITOS");
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Determinar la pestaña activa basándose en la ruta
+  const activeTab =
+    location.pathname.split("/")[2]?.toUpperCase() || "FAVORITOS";
 
   const renderContent = () => {
     switch (activeTab) {
@@ -22,7 +31,7 @@ const MyLists = () => {
   };
 
   return (
-    <div className="bg-black text-white px-4 py-6 min-h-screen">
+    <div className="bg-black text-white px-4 py-20 min-h-screen">
       <div className="text-center">
         <h1 className="font-bold flex justify-center items-center space-x-2">
           <FaRegBookmark className="text-2xl" />
@@ -37,7 +46,7 @@ const MyLists = () => {
         ].map((tab) => (
           <button
             key={tab.name}
-            onClick={() => setActiveTab(tab.name)}
+            onClick={() => navigate(`/mylists/${tab.name}`)} // Cambiar la ruta
             className={`px-4 py-2 flex items-center text-sm md:text-base ${
               activeTab === tab.name
                 ? "text-orange-500 border-b-2 border-orange-500 font-bold"

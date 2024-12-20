@@ -36,7 +36,12 @@ import GiftCardRedeemPage from "./pages/GiftCardRedeemPage";
 import EventsAndExperiences from "./pages/EventsAndExperiences";
 import FooterAccount from "./components/Account/FooterAccount";
 import HeaderAccount from "./components/Account/HeaderAccount";
+import MyLists from "./components/MyLists/MyLists";
 import ResetPassword from "./pages/ResetPassword";
+import ProfilesPage from "./pages/ProfilesPage";
+import ChangeProfile from "./pages/ChangeProfile";
+import AccountSettings from "./pages/AccountSettings";
+import Notifications from "./pages/Notifications";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -182,12 +187,69 @@ const App = () => {
             }
           />
           <Route
+            path="/changeprofile"
+            element={
+              <>
+                <HeaderAccount />
+                <div className="min-h-screen bg-gray-900 text-white p-4">
+                  <ChangeProfile />
+                </div>
+              </>
+            }
+          />
+          <Route
+            path="/profiles"
+            element={
+              <>
+                <div className="min-h-screen bg-gray-900 text-white p-4">
+                  <ProfilesPage />
+                </div>
+              </>
+            }
+          />
+          <Route
             path="/NewsPage"
             element={
               <>
                 <Header />
                 <div className="min-h-screen bg-gray-900 text-white p-4">
                   <NewsPage />
+                </div>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <>
+                <Header />
+                <div className="min-h-screen bg-gray-900 text-white p-4">
+                  <Notifications />
+                </div>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/accountsettings"
+            element={
+              <>
+                <Header />
+                <div className="min-h-screen bg-gray-900 text-white p-4">
+                  <AccountSettings />
+                </div>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="//mylists/:tab"
+            element={
+              <>
+                <Header />
+                <div className="min-h-screen bg-gray-900 text-white p-4">
+                  <MyLists />
                 </div>
                 <Footer />
               </>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FaEnvelope,
   FaLock,
@@ -7,8 +7,14 @@ import {
   FaUserAlt,
   FaKey,
 } from "react-icons/fa";
+import { useAuth } from "../context/AuthContext"; // Ajusta el path según tu estructura
 
 const AccountSettings = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  const { updateProfile } = useAuth(); // Extrae la función para actualizar datos desde el contexto
   const [activeSection, setActiveSection] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -16,19 +22,27 @@ const AccountSettings = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const handleUpdateEmail = () => {
+
+  const handleUpdateEmail = async () => {
     if (!validateEmail(newEmail)) {
       setEmailError("Por favor, ingresa un correo electrónico válido.");
       return;
     }
     setEmailError("");
-    alert("Correo actualizado correctamente.");
+    const response = await updateProfile({ email: newEmail }); // Llama al backend
+    if (response.success) {
+      setSuccessMessage("Correo actualizado correctamente.");
+    } else {
+      setEmailError(response.message);
+    }
   };
 
-  const handleUpdatePassword = () => {
-    if (newPassword.length < 8) {
-      setPasswordError("La contraseña debe tener al menos 8 caracteres.");
+  const handleUpdatePassword = async () => {
+    if (newPassword.length < 6) {
+      setPasswordError("La contraseña debe tener al menos 6 caracteres.");
       return;
     }
     if (newPassword !== confirmPassword) {
@@ -36,11 +50,16 @@ const AccountSettings = () => {
       return;
     }
     setPasswordError("");
-    alert("Contraseña actualizada correctamente.");
+    const response = await updateProfile({ password: newPassword }); // Llama al backend
+    if (response.success) {
+      setSuccessMessage("Contraseña actualizada correctamente.");
+    } else {
+      setPasswordError(response.message);
+    }
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-gray-900 min-h-screen text-gray-100">
+    <div className="flex flex-col md:flex-row bg-gray-900 min-h-screen text-gray-100 py-20">
       <div className="w-full md:w-1/4 bg-gray-800 py-10 px-6">
         <h1 className="text-2xl font-bold mb-6 flex items-center">
           <FaUserAlt className="mr-2 text-blue-400" /> Cuenta
@@ -63,6 +82,9 @@ const AccountSettings = () => {
         </ul>
       </div>
       <div className="flex-1 py-10 px-6">
+        {successMessage && (
+          <p className="text-green-500 text-lg mb-4">{successMessage}</p>
+        )}
         {!activeSection && (
           <p className="text-gray-400 text-lg">
             Selecciona una opción en el menú para comenzar.

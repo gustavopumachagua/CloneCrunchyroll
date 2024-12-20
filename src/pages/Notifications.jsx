@@ -1,8 +1,12 @@
 import television from "../assets/image/television.jpeg";
+import { useEffect } from "react";
 
 const Notifications = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
-    <div className="bg-black min-h-screen text-white px-4 md:px-16 py-8">
+    <div className="bg-black min-h-screen text-white px-4 md:px-16 py-20">
       <h1 className="text-center text-2xl md:text-3xl font-bold mb-8">
         Centro de Notificaciones
       </h1>

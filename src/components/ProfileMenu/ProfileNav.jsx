@@ -6,24 +6,50 @@ import {
   FaHistory,
   FaBell,
   FaGift,
-  FaSignOutAlt,
 } from "react-icons/fa";
-
-const navItems = [
-  { icon: <FaUser size={18} />, label: "Cambiar perfil" },
-  { icon: <FaCog size={18} />, label: "Opciones" },
-  { icon: <FaHeart size={18} />, label: "Favoritos" },
-  { icon: <FaList size={18} />, label: "Crunchylistas" },
-  {
-    icon: <FaHistory size={18} />,
-    label: "Historial",
-    className: "text-orange-500",
-  },
-  { icon: <FaBell size={18} />, label: "Notificaciones" },
-  { icon: <FaGift size={18} />, label: "Tarjeta regalo" },
-];
+import { useNavigate } from "react-router-dom";
 
 const ProfileNav = () => {
+  const navigate = useNavigate();
+
+  const navItems = [
+    {
+      icon: <FaUser size={18} />,
+      label: "Cambiar perfil",
+      onClick: () => navigate("/changeprofile"),
+    },
+    {
+      icon: <FaCog size={18} />,
+      label: "Opciones",
+      onClick: () => navigate("/accountsettings"),
+    },
+    {
+      icon: <FaHeart size={18} />,
+      label: "Favoritos",
+      onClick: () => navigate("/mylists/FAVORITOS"),
+    },
+    {
+      icon: <FaList size={18} />,
+      label: "Crunchylistas",
+      onClick: () => navigate("/mylists/CRUNCHYLISTAS"),
+    },
+    {
+      icon: <FaHistory size={18} />,
+      label: "Historial",
+      onClick: () => navigate("/mylists/HISTORIAL"),
+    },
+    {
+      icon: <FaBell size={18} />,
+      label: "Notificaciones",
+      onClick: () => navigate("/notifications"),
+    },
+    {
+      icon: <FaGift size={18} />,
+      label: "Tarjeta regalo",
+      onClick: () => navigate("/canjeartarjeta"),
+    },
+  ];
+
   return (
     <nav>
       <ul className="space-y-2">
@@ -32,18 +58,12 @@ const ProfileNav = () => {
             key={index}
             className={`flex items-center gap-4 py-2 px-4 rounded-md hover:bg-gray-800 cursor-pointer ${
               item.className || ""
-            }`}>
+            }`}
+            onClick={item.onClick}>
             {item.icon}
             <span>{item.label}</span>
           </li>
         ))}
-        <li className="text-sm text-gray-400 px-12">
-          ¿Tienes una tarjeta regalo? Canjéala aquí.
-        </li>
-        <li className="flex items-center gap-4 py-2 px-4 rounded-md hover:bg-gray-800 cursor-pointer">
-          <FaSignOutAlt size={18} />
-          <span>Desconectar</span>
-        </li>
       </ul>
     </nav>
   );

@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaEdit, FaPlusCircle, FaCheckCircle } from "react-icons/fa";
 import fondo from "../assets/image/Fondo_Cuenta.jpg";
 
 const ChangeProfile = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   const [profiles, setProfiles] = useState([
     { id: 1, name: "GussDev", avatar: "https://via.placeholder.com/100" },
   ]);

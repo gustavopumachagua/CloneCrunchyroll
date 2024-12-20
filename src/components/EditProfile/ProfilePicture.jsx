@@ -1,16 +1,14 @@
-import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 
-const ProfilePicture = () => {
-  const [profileImage, setProfileImage] = useState(
-    "https://via.placeholder.com/150"
-  );
-
+const ProfilePicture = ({ avatar, setAvatar }) => {
   const handleProfileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setProfileImage(imageUrl);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatar(reader.result); // Base64 string
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -18,7 +16,7 @@ const ProfilePicture = () => {
     <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-12">
       <div className="relative w-24 h-24 md:w-28 md:h-28">
         <img
-          src={profileImage}
+          src={avatar}
           alt="Profile"
           className="w-full h-full object-cover rounded-full border-4 border-black"
         />

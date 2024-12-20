@@ -13,7 +13,9 @@ const HeroCards = () => {
         const popularAnimes = await fetchTopAnimes(15);
         setItems(
           popularAnimes.map((anime) => ({
-            image: anime.images.jpg.large_image_url || "/default-image.jpg",
+            image:
+              anime.images.jpg.large_image_url ||
+              "https://via.placeholder.com/400x300?text=Imagen+no+disponible",
             title: anime.title,
             subtitle: `${anime.type} | ${anime.episodes || "?"} episodios`,
             mal_id: anime.mal_id,

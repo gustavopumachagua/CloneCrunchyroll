@@ -1,23 +1,28 @@
-import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
+import PropTypes from "prop-types";
 
-const BackgroundImage = () => {
-  const [backgroundImage, setBackgroundImage] = useState(
-    "https://via.placeholder.com/600x200"
-  );
-
+const BackgroundImage = ({ backgroundImage, setBackgroundImage }) => {
   const handleBackgroundChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setBackgroundImage(imageUrl);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBackgroundImage(reader.result); // Base64 string
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   return (
-    <div
-      className="relative bg-cover bg-center h-40 md:h-48"
-      style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <div className="relative h-40 md:h-48">
+      {/* Imagen de fondo como <img> */}
+      {backgroundImage && (
+        <img
+          src={backgroundImage}
+          alt="Background"
+          className="w-full h-full object-cover"
+        />
+      )}
       <label className="absolute bottom-2 right-2 bg-gray-900 p-2 rounded-full text-white cursor-pointer hover:bg-gray-700 transition">
         <FiEdit2 size={16} />
         <input
@@ -29,6 +34,11 @@ const BackgroundImage = () => {
       </label>
     </div>
   );
+};
+
+BackgroundImage.propTypes = {
+  backgroundImage: PropTypes.string.isRequired,
+  setBackgroundImage: PropTypes.func.isRequired,
 };
 
 export default BackgroundImage;
