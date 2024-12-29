@@ -1,4 +1,4 @@
-import { FaCog } from "react-icons/fa";
+import { FaCog, FaArrowLeft } from "react-icons/fa";
 import {
   MdDelete,
   MdStar,
@@ -13,6 +13,8 @@ const DashboardContent = ({
   setIsDeleteModalOpen,
   animeList,
   onRemoveAnime,
+  onSaveList,
+  setAnimeList,
 }) => {
   const [showCogMenu, setShowCogMenu] = useState(false);
   const [isCogRotating, setIsCogRotating] = useState(false);
@@ -22,6 +24,9 @@ const DashboardContent = ({
     navigate("/Series", { state: { anime } });
   };
 
+  const handleAddAnime = (newAnime) => {
+    setAnimeList((prevList) => [...prevList, newAnime]);
+  };
   const handleCogClick = () => {
     setIsCogRotating(true);
     setTimeout(() => setIsCogRotating(false), 300);
@@ -31,6 +36,14 @@ const DashboardContent = ({
   return (
     <div className="flex-1 p-4 relative bg-gray-900 min-h-screen">
       {/* Botón FaCog con efecto */}
+      <div className="sticky top-4 left-4 z-30 flex items-center">
+        <button
+          onClick={onSaveList}
+          className="flex items-center text-gray-400 hover:text-white text-lg">
+          <FaArrowLeft className="mr-2" />
+          <span>Volver a Crunchylists</span>
+        </button>
+      </div>
       <div className="sticky top-8 right-8 z-30 flex justify-end">
         <button
           onClick={handleCogClick}
@@ -61,14 +74,12 @@ const DashboardContent = ({
         )}
       </div>
 
-      {/* Contenedor principal con scroll */}
       <div className="space-y-4 mt-20 max-h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800">
         {animeList.map((anime) => (
           <div
             key={anime.mal_id}
             onClick={() => handleCardClick(anime)}
             className="flex flex-col sm:flex-row bg-gray-800 rounded-md shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer text-sm">
-            {/* Imagen del anime */}
             <div className="relative">
               <img
                 src={anime.images?.jpg?.large_image_url || "/default-image.jpg"}
@@ -80,9 +91,7 @@ const DashboardContent = ({
               </span>
             </div>
 
-            {/* Contenido del anime */}
             <div className="p-3 flex flex-col flex-1">
-              {/* Título e información principal */}
               <div className="mb-2">
                 <h3 className="text-base font-semibold text-white">
                   {anime.title}
@@ -113,15 +122,15 @@ const DashboardContent = ({
                 </div>
               </div>
 
-              {/* Botón de eliminar */}
               <div className="mt-auto">
                 <button
                   className="p-1 text-red-500 hover:text-red-400"
                   onClick={(e) => {
                     e.stopPropagation();
                     onRemoveAnime(anime.mal_id);
-                  }}>
-                  <MdDelete className="text-lg" />
+                  }}
+                  title="Eliminar">
+                  <MdDelete className="text-2xl" />
                 </button>
               </div>
             </div>
@@ -129,7 +138,6 @@ const DashboardContent = ({
         ))}
       </div>
 
-      {/* Mensaje informativo */}
       {animeList.length === 0 && (
         <div className="text-center mt-10">
           <p className="text-gray-400">

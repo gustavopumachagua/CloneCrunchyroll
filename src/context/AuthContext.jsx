@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
     if (token) {
       // Opcional: cargar los datos del usuario desde el backend
-      fetch("http://localhost:5005/api/users/profile", {
+      fetch("https://backendclonecrunchyroll.onrender.com/api/users/profile", {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())
@@ -28,14 +28,17 @@ export const AuthProvider = ({ children }) => {
   const updateProfile = async (updatedData) => {
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://localhost:5005/api/users/profile", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedData),
-      });
+      const response = await fetch(
+        "https://backendclonecrunchyroll.onrender.com/api/users/profile",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedData),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -49,6 +52,11 @@ export const AuthProvider = ({ children }) => {
       return { success: false, message: "Error al actualizar el perfil" };
     }
   };
+  const switchProfile = (newToken, newUser) => {
+    localStorage.setItem("token", newToken);
+    setIsAuthenticated(true);
+    setUser(newUser);
+  };
 
   return (
     <AuthContext.Provider
@@ -58,6 +66,7 @@ export const AuthProvider = ({ children }) => {
         user,
         setUser,
         updateProfile,
+        switchProfile,
       }}>
       {children}
     </AuthContext.Provider>

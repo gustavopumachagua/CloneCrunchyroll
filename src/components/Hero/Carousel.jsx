@@ -43,7 +43,7 @@ const Carousel = ({ slides }) => {
         <FaChevronRight size={24} />
       </button>
 
-      <div className="absolute bottom-16 md:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
+      <div className="absolute bottom-56 md:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
         {slides.map((_, index) => (
           <div
             key={index}

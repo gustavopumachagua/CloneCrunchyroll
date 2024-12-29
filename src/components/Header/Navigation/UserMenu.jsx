@@ -49,7 +49,6 @@ const UserMenu = () => {
         <div
           className="fixed inset-0 bg-black/75 z-40 transition-opacity duration-300"
           style={{ top: "4rem" }}
-          onClick={close}
           aria-hidden="true"></div>
       )}
 
@@ -57,11 +56,11 @@ const UserMenu = () => {
         <div
           id="user-menu"
           ref={menuRef}
-          className="fixed top-16 right-0  bg-gray-900 z-50 overflow-y-auto shadow-lg border border-gray-700 animate-slide-down"
+          className="fixed top-16 right-0 bg-gray-900 z-50 overflow-y-auto shadow-lg border border-gray-700 animate-slide-down"
           style={{
             height: "calc(100vh - 4rem)",
           }}>
-          <AccountMenu />
+          <AccountMenu closeMenu={() => setIsOpen(false)} />
         </div>
       )}
     </div>

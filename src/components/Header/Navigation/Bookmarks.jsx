@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiBookmark } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./../../../context/AuthContext"; // Ajusta el path según tu estructura
+import { useAuth } from "./../../../context/AuthContext";
 
 const Bookmarks = () => {
   const navigate = useNavigate();
@@ -19,8 +19,8 @@ const Bookmarks = () => {
   return (
     <button
       onClick={() => {
-        setIsActive((prev) => !prev); // Alterna el estado de marcado
-        handleBookmarkClick(); // Redirige según el estado de autenticación
+        setIsActive((prev) => !prev);
+        handleBookmarkClick();
       }}
       className="text-gray-400 hover:text-white transition-all duration-300 p-2 rounded-full hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-500"
       aria-label="Agregar a Favoritos"

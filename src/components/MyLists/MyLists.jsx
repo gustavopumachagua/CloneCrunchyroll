@@ -12,8 +12,6 @@ const MyLists = () => {
   }, []);
   const navigate = useNavigate();
   const location = useLocation();
-
-  // Determinar la pestaña activa basándose en la ruta
   const activeTab =
     location.pathname.split("/")[2]?.toUpperCase() || "FAVORITOS";
 
@@ -46,7 +44,7 @@ const MyLists = () => {
         ].map((tab) => (
           <button
             key={tab.name}
-            onClick={() => navigate(`/mylists/${tab.name}`)} // Cambiar la ruta
+            onClick={() => navigate(`/mylists/${tab.name}`)}
             className={`px-4 py-2 flex items-center text-sm md:text-base ${
               activeTab === tab.name
                 ? "text-orange-500 border-b-2 border-orange-500 font-bold"

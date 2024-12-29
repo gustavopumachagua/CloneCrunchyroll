@@ -2,34 +2,45 @@ import MenuItem from "./MenuItem";
 import PremiumButton from "./PremiumButton";
 import { useNavigate } from "react-router-dom";
 
-const AccountMenu = () => {
+const AccountMenu = ({ closeMenu }) => {
   const navigate = useNavigate();
 
   return (
     <div className="bg-gray-900 text-white p-6 md:p-8 max-w-sm mx-auto md:mx-0 rounded-lg shadow-lg">
-      {/* Crear cuenta */}
       <MenuItem
         title="Crear cuenta"
         description="Suscríbete gratis o hazte Premium."
-        onClick={() => navigate("/register")}
+        onClick={() => {
+          closeMenu();
+          navigate("/register");
+        }}
       />
 
-      {/* Acceder */}
       <MenuItem
         title="Acceder"
         description="¿Ya eres miembro de Crunchyroll? Te damos la bienvenida."
-        onClick={() => navigate("/acceder")}
+        onClick={() => {
+          closeMenu();
+          navigate("/acceder");
+        }}
       />
 
-      {/* Tarjeta regalo */}
       <MenuItem
         title="Tarjeta regalo"
         description="¿Tienes una tarjeta regalo? Canjéala aquí."
-        onClick={() => navigate("/canjeartarjeta")}
+        onClick={() => {
+          closeMenu();
+          navigate("/canjeartarjeta");
+        }}
       />
 
-      {/* Botón de prueba gratuita */}
-      <PremiumButton title="Premium" onClick={() => navigate("/premium")} />
+      <PremiumButton
+        title="Premium"
+        onClick={() => {
+          closeMenu();
+          navigate("/premium");
+        }}
+      />
     </div>
   );
 };

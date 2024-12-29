@@ -9,7 +9,7 @@ import AvatarProfile from "../Navigation/AvatarProfile";
 
 const MobileHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [userData, setUserData] = useState(null); // Cambiado a userData para ser consistente con DesktopHeader
+  const [userData, setUserData] = useState(null);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const { isAuthenticated } = useAuth();
 
@@ -78,17 +78,16 @@ const MobileHeader = () => {
             <SearchBar />
             {isAuthenticated && userData ? (
               <div className="relative flex items-center space-x-1">
-                {/* Avatar del usuario */}
                 <AvatarProfile user={userData} onClick={toggleProfileMenu} />
-                {/* Icono FaCaretDown */}
                 <FaCaretDown
                   className="cursor-pointer"
                   onClick={toggleProfileMenu}
                 />
-                {/* Menú de perfil */}
                 {isProfileMenuOpen && (
                   <div className="absolute top-full right-0 mt-2 w-56 z-50 bg-gray-800 rounded-lg shadow-lg">
-                    <ProfileMenu />
+                    <ProfileMenu
+                      closeProfileMenu={() => setIsProfileMenuOpen(false)}
+                    />
                   </div>
                 )}
               </div>

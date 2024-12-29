@@ -110,7 +110,6 @@ const MusicVideos = () => {
         </div>
       )}
 
-      {/* Modal para el iframe del video */}
       {selectedVideo && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
           <div className="bg-gray-900 rounded-lg p-6 max-w-xl w-full">

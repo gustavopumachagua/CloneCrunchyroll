@@ -7,14 +7,14 @@ import {
   FaUserAlt,
   FaKey,
 } from "react-icons/fa";
-import { useAuth } from "../context/AuthContext"; // Ajusta el path según tu estructura
+import { useAuth } from "../context/AuthContext";
 
 const AccountSettings = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  const { updateProfile } = useAuth(); // Extrae la función para actualizar datos desde el contexto
+  const { updateProfile } = useAuth();
   const [activeSection, setActiveSection] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -32,7 +32,7 @@ const AccountSettings = () => {
       return;
     }
     setEmailError("");
-    const response = await updateProfile({ email: newEmail }); // Llama al backend
+    const response = await updateProfile({ email: newEmail });
     if (response.success) {
       setSuccessMessage("Correo actualizado correctamente.");
     } else {
@@ -50,7 +50,7 @@ const AccountSettings = () => {
       return;
     }
     setPasswordError("");
-    const response = await updateProfile({ password: newPassword }); // Llama al backend
+    const response = await updateProfile({ password: newPassword });
     if (response.success) {
       setSuccessMessage("Contraseña actualizada correctamente.");
     } else {

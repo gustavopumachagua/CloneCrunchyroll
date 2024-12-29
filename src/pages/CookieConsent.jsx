@@ -31,7 +31,6 @@ const CookieConsent = () => {
   return (
     <div className="bg-gray-900 text-white py-20 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Encabezado */}
         <h1 className="text-4xl font-bold text-center mb-8">
           Herramienta de Aceptación de Cookies
         </h1>
@@ -40,7 +39,6 @@ const CookieConsent = () => {
           en nuestra plataforma.
         </p>
 
-        {/* Imagen principal */}
         <div className="mb-12">
           <img
             src={cookie}
@@ -49,7 +47,6 @@ const CookieConsent = () => {
           />
         </div>
 
-        {/* Funcionalidades Destacadas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {cookieFeatures.map((feature, index) => (
             <div
@@ -62,7 +59,6 @@ const CookieConsent = () => {
           ))}
         </div>
 
-        {/* Configuración de Cookies */}
         <div className="mt-16">
           <h2 className="text-3xl font-bold mb-6">
             Configura tus Preferencias

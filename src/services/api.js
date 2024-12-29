@@ -24,6 +24,9 @@ export const fetchPopularAnimeWithEpisodes = async (retries = 3) => {
             description: anime.synopsis || "Sin descripción disponible.",
             image: anime.images.webp.large_image_url || "/default-image.jpg",
             episodes,
+            subtitle:
+              anime.subtitle ||
+              `${anime.type} | ${anime.episodes || "?"} episodios`,
           };
         } catch {
           return {
@@ -33,6 +36,9 @@ export const fetchPopularAnimeWithEpisodes = async (retries = 3) => {
             description: anime.synopsis || "Sin descripción disponible.",
             image: anime.images.webp.large_image_url || "/default-image.jpg",
             episodes: [],
+            subtitle:
+              anime.subtitle ||
+              `${anime.type} | ${anime.episodes || "?"} episodios`,
           };
         }
       })

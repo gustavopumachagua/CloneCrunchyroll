@@ -10,15 +10,14 @@ import { FaCaretDown } from "react-icons/fa";
 
 import AvatarProfile from "../Navigation/AvatarProfile";
 import SearchBar from "../Navigation/SearchBar";
-import ProfileMenu from "../../ProfileMenu/ProfileMenu.jsx"; // Importar el menú del perfil
+import ProfileMenu from "../../ProfileMenu/ProfileMenu.jsx";
 import { getUserData } from "../../../services/userService.js";
 
 const DesktopHeader = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false); // Control del menú de perfil
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
-  // Simulación de inicio de sesión
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -34,33 +33,28 @@ const DesktopHeader = () => {
     fetchUserData();
   }, []);
 
-  // Bloquear scroll y agregar fondo cuando el menú está abierto
   useEffect(() => {
     if (isProfileMenuOpen) {
-      document.body.style.overflow = "hidden"; // Bloquear scroll
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = ""; // Restaurar scroll
+      document.body.style.overflow = "";
     }
 
-    // Limpiar al desmontar
     return () => {
       document.body.style.overflow = "";
     };
   }, [isProfileMenuOpen]);
 
-  // Función para alternar el menú de perfil
   const toggleProfileMenu = () => {
     setIsProfileMenuOpen((prevState) => !prevState);
   };
 
   return (
     <>
-      {/* Fondo opaco (Overlay) */}
       {isProfileMenuOpen && (
         <div
           className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 z-40"
-          onClick={toggleProfileMenu} // Cerrar menú al hacer clic en el fondo
-        ></div>
+          onClick={toggleProfileMenu}></div>
       )}
 
       <header
@@ -89,7 +83,6 @@ const DesktopHeader = () => {
           <div role="button" aria-label="Marcadores" className="">
             <Bookmarks />
           </div>
-          {/* Avatar y menú de perfil */}
           {isLoggedIn ? (
             <div className=" relative flex items-center space-x-1">
               <AvatarProfile user={userData} onClick={toggleProfileMenu} />
@@ -99,7 +92,9 @@ const DesktopHeader = () => {
               />
               {isProfileMenuOpen && (
                 <div className="absolute top-full right-0 mt-2 z-50">
-                  <ProfileMenu />
+                  <ProfileMenu
+                    closeProfileMenu={() => setIsProfileMenuOpen(false)}
+                  />
                 </div>
               )}
             </div>

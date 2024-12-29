@@ -17,7 +17,6 @@ const Sidebar = ({ listName, onAddAnime }) => {
 
   const navigate = useNavigate();
 
-  // Lógica para buscar animes
   useEffect(() => {
     if (!query.trim()) {
       setResults([]);
@@ -48,8 +47,8 @@ const Sidebar = ({ listName, onAddAnime }) => {
   };
 
   const closeSearchBar = () => {
-    setQuery(""); // Limpia la consulta
-    setResults([]); // Limpia los resultados
+    setQuery("");
+    setResults([]);
   };
 
   return (

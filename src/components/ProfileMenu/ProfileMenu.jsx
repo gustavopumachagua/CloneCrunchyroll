@@ -4,13 +4,12 @@ import ProfileNav from "./ProfileNav";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const ProfileMenu = () => {
+const ProfileMenu = ({ closeProfileMenu }) => {
   const navigate = useNavigate();
-  const handleLogout = () => {
-    // Eliminar el token del Local Storage
-    localStorage.removeItem("token");
 
-    // Redirigir al usuario a la página de inicio de sesión
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    closeProfileMenu();
     navigate("/acceder");
   };
 
@@ -20,13 +19,10 @@ const ProfileMenu = () => {
         <ProfileHeader />
         <ProfileButton />
       </div>
-      {/* Área de navegación con scroll */}
       <div className="flex-grow overflow-y-auto">
-        <ProfileNav />
+        <ProfileNav closeProfileMenu={closeProfileMenu} />
       </div>
-      {/* Botón Desconectar */}
       <div className="flex-grow overflow-y-auto">
-        {/* Botón Desconectar */}
         <li
           onClick={handleLogout}
           className="flex items-center gap-4 py-2 px-4 rounded-md hover:bg-gray-800 cursor-pointer">

@@ -1,16 +1,38 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaGift, FaCreditCard, FaRegCheckCircle } from "react-icons/fa";
 import regalo from "../assets/image/regalo.avif";
 
 const GiftCardRedeemPage = () => {
+  const [giftCode, setGiftCode] = useState("");
+  const [redeemMessage, setRedeemMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const handleRedeem = (e) => {
+    e.preventDefault();
+
+    if (giftCode.trim()) {
+      setRedeemMessage("¡Regalo canjeado con éxito!");
+      setMessageType("success");
+      setGiftCode("");
+    } else {
+      setRedeemMessage("Por favor, introduce un código válido.");
+      setMessageType("error");
+    }
+
+    setTimeout(() => {
+      setRedeemMessage("");
+      setMessageType("");
+    }, 5000);
+  };
+
   return (
     <div className="bg-gray-900 text-white min-h-screen py-20 px-6">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-10">
+        <div className="text-center mb-4">
           <FaGift className="text-orange-500 text-5xl mx-auto mb-4" />
           <h1 className="text-4xl font-bold">Canjear Tarjeta Regalo</h1>
           <p className="text-gray-400 mt-2">
@@ -18,6 +40,18 @@ const GiftCardRedeemPage = () => {
             exclusivos.
           </p>
         </div>
+
+        {redeemMessage && (
+          <div
+            className={`text-center py-3 px-6 rounded-lg shadow-lg transition-opacity duration-500 mb-6 ${
+              messageType === "success"
+                ? "bg-green-500 text-white"
+                : "bg-red-500 text-white"
+            }`}>
+            <p className="text-lg font-semibold">{redeemMessage}</p>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="flex justify-center">
             <img
@@ -29,7 +63,7 @@ const GiftCardRedeemPage = () => {
 
           <div>
             <h2 className="text-2xl font-bold mb-4">Ingresa tu código</h2>
-            <form className="space-y-4">
+            <form onSubmit={handleRedeem} className="space-y-4">
               <div>
                 <label
                   htmlFor="giftCode"
@@ -41,6 +75,8 @@ const GiftCardRedeemPage = () => {
                   <input
                     type="text"
                     id="giftCode"
+                    value={giftCode}
+                    onChange={(e) => setGiftCode(e.target.value)}
                     placeholder="Ejemplo: ABCD-1234-EFGH"
                     className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-orange-500 focus:outline-none"
                   />

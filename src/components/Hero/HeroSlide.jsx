@@ -1,13 +1,73 @@
 import { FaPlay, FaShieldAlt } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { useHistory } from "../../context/HistoryContext";
 
 const HeroSlide = ({ slide, isActive }) => {
   const navigate = useNavigate();
+  const { user, setUser } = useAuth();
+  const { addToHistory } = useHistory();
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  const handleStartWatching = () => {
+  useEffect(() => {
+    setIsFavorite(
+      user?.favorites?.some((fav) => fav.animeId === slide?.id) || false
+    );
+  }, [slide?.id, user?.favorites]);
+
+  const toggleFavorite = async () => {
+    setIsFavorite((prev) => !prev);
+
+    try {
+      const response = await fetch(
+        "https://backendclonecrunchyroll.onrender.com/api/users/favorites/toggle",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            animeId: slide.id,
+            title: slide.title,
+            image: slide.image,
+            rating: slide.rating,
+            description: slide.description,
+            subtitle: slide.subtitle,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        setUser((prevUser) => ({
+          ...prevUser,
+          favorites: Array.isArray(data.favorites) ? data.favorites : [],
+        }));
+
+        setIsFavorite(data.favorites.some((fav) => fav.animeId === slide.id));
+      } else {
+        console.error(data.message);
+        setIsFavorite((prev) => !prev);
+      }
+    } catch (error) {
+      console.error("Error al actualizar favoritos:", error);
+      setIsFavorite((prev) => !prev);
+    }
+  };
+
+  const handleStartWatching = async () => {
     if (slide.episodes && slide.episodes.length > 0) {
       const firstEpisode = slide.episodes[0];
+      await addToHistory({
+        mal_id: firstEpisode.mal_id || slide.id,
+        episodeNumber: firstEpisode.episodeNumber || "1",
+        title: firstEpisode.title || slide.title,
+        animeImage: slide.image,
+        addedDate: new Date().toISOString(),
+      });
       navigate("/episode-details", {
         state: {
           episode: firstEpisode,
@@ -45,13 +105,19 @@ const HeroSlide = ({ slide, isActive }) => {
               <span>COMENZAR A VER E1</span>
             </button>
 
-            <div className="relative group cursor-pointer flex items-center justify-center">
+            <div
+              className="relative group cursor-pointer flex items-center justify-center"
+              onClick={toggleFavorite}>
               <FaBookmark
                 size={28}
-                className="text-white hover:text-orange-500 transition-all"
+                className={`transition-all ${
+                  isFavorite
+                    ? "text-orange-500"
+                    : "text-white hover:text-orange-500"
+                }`}
               />
               <div className="absolute top-10 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-gray-800 text-sm text-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
-                Añadir a favoritos
+                {isFavorite ? "Eliminar de favoritos" : "Añadir a favoritos"}
               </div>
             </div>
           </div>

@@ -12,7 +12,7 @@ const Watchlist = () => {
   const removeFavorite = async (animeId) => {
     try {
       const response = await fetch(
-        "http://localhost:5005/api/users/favorites/toggle",
+        "https://backendclonecrunchyroll.onrender.com/api/users/favorites/toggle",
         {
           method: "POST",
           headers: {
@@ -61,8 +61,7 @@ const Watchlist = () => {
         <div
           key={favorite.animeId}
           className="bg-gray-800 text-white rounded-lg shadow-lg p-4 flex flex-col cursor-pointer"
-          onClick={() => handleCardClick(favorite)} // Agrega la redirección aquí
-        >
+          onClick={() => handleCardClick(favorite)}>
           <div className="flex justify-center">
             <img
               src={favorite.image}
@@ -77,7 +76,7 @@ const Watchlist = () => {
           <button
             className="mt-4 text-red-500 flex items-center space-x-2 hover:underline"
             onClick={(e) => {
-              e.stopPropagation(); // Evita que el clic en el botón active la redirección
+              e.stopPropagation();
               removeFavorite(favorite.animeId);
             }}>
             <FaTrash className="mr-2" /> Eliminar

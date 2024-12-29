@@ -22,7 +22,6 @@ const ProfilesPage = () => {
     const updatedData = { name, avatar, backgroundImage };
     const result = await updateProfile(updatedData);
     if (result.success) {
-      // Redirige con el mensaje de éxito
       navigate("/", {
         state: { successMessage: "Perfil actualizado correctamente" },
       });

@@ -10,11 +10,10 @@ const RenameListModal = ({
 }) => {
   const inputRef = useRef(null);
 
-  // Autoenfocar el input y configurar el valor inicial al abrir el modal
   useEffect(() => {
     if (isOpen) {
       inputRef.current.focus();
-      setNewListName(currentName); // Inicializar con el nombre actual
+      setNewListName(currentName);
     }
   }, [isOpen, currentName, setNewListName]);
 

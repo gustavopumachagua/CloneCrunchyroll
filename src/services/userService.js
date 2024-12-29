@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const getUserData = async () => {
-  const token = localStorage.getItem("token"); // Obtén el token de sesión
+  const token = localStorage.getItem("token");
   if (!token) return null;
 
   try {

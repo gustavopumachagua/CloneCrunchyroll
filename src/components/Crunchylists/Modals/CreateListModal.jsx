@@ -11,7 +11,6 @@ const CreateListModal = ({
 }) => {
   const inputRef = useRef(null);
 
-  // Enfocar automáticamente el input al abrir el modal
   useEffect(() => {
     if (isOpen) {
       inputRef.current.focus();

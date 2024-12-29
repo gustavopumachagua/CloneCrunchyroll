@@ -10,6 +10,7 @@ import {
 import { FaBookmark } from "react-icons/fa6";
 import AnimeEpisodes from "../components/AnimeEpisodio/AnimeEpisodes";
 import { useAuth } from "../context/AuthContext";
+import ModalCrunchylists from "../components/Crunchylists/ModalCrunchylists";
 
 const Series = () => {
   const location = useLocation();
@@ -19,13 +20,63 @@ const Series = () => {
   const { user, setUser } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
   const [isLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [lists, setLists] = useState([]);
+
+  const [selectedAnime, setSelectedAnime] = useState(null);
+
+  const handleAddToCrunchylist = () => {
+    setSelectedAnime(anime);
+    setIsModalOpen(true);
+  };
+
+  useEffect(() => {
+    const fetchLists = async () => {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        "https://backendclonecrunchyroll.onrender.com/api/users/crunchylists",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      const data = await response.json();
+      setLists(data);
+    };
+
+    fetchLists();
+  }, []);
+
+  const handleAddToList = async (list) => {
+    const updatedList = {
+      ...list,
+      content: [...list.content, anime],
+    };
+
+    const token = localStorage.getItem("token");
+    await fetch(
+      `https://backendclonecrunchyroll.onrender.com/api/users/crunchylists/${list.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedList),
+      }
+    );
+
+    setIsModalOpen(false);
+  };
+
+  const handleCreateNewList = () => {
+    console.log("Crear una nueva lista");
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   useEffect(() => {
-    // Sincroniza solo al montar o si `anime.mal_id` cambia
     setIsFavorite(
       user?.favorites?.some((fav) => fav.animeId === anime?.mal_id) || false
     );
@@ -40,14 +91,12 @@ const Series = () => {
   }
 
   const toggleSynopsis = () => setShowFullSynopsis(!showFullSynopsis);
-
   const toggleFavorite = async () => {
-    // Cambiar estado local antes de la solicitud
     setIsFavorite((prev) => !prev);
 
     try {
       const response = await fetch(
-        "http://localhost:5005/api/users/favorites/toggle",
+        "https://backendclonecrunchyroll.onrender.com/api/users/favorites/toggle",
         {
           method: "POST",
           headers: {
@@ -74,24 +123,22 @@ const Series = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Actualizar la lista de favoritos del usuario
         setUser((prevUser) => ({
           ...prevUser,
           favorites: Array.isArray(data.favorites) ? data.favorites : [],
         }));
 
-        // Actualizar `isFavorite` con la respuesta del servidor
         setIsFavorite(
           data.favorites.some((fav) => fav.animeId === anime.mal_id)
         );
       } else {
         console.error(data.message);
-        // Revertir el estado en caso de error
+
         setIsFavorite((prev) => !prev);
       }
     } catch (error) {
       console.error("Error al actualizar favoritos:", error);
-      // Revertir el estado en caso de error
+
       setIsFavorite((prev) => !prev);
     }
   };
@@ -157,8 +204,8 @@ const Series = () => {
               disabled={isLoading}
               className={`flex items-center justify-center px-4 py-2 rounded-full shadow-md transition-transform transform hover:scale-105 w-full sm:w-auto ${
                 isFavorite
-                  ? "bg-orange-500 text-gray-900" // Pintado si es favorito
-                  : "bg-gray-700 text-white" // Sin pintar si no es favorito
+                  ? "bg-orange-500 text-gray-900"
+                  : "bg-gray-700 text-white"
               } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
               onClick={toggleFavorite}>
               <FaBookmark className="mr-2" size={20} />
@@ -166,16 +213,26 @@ const Series = () => {
                 {isLoading
                   ? "Cargando..."
                   : isFavorite
-                  ? "Eliminar de Favoritos" // Texto si ya es favorito
+                  ? "Eliminar de Favoritos"
                   : "Añadir a Favoritos"}{" "}
               </span>
             </button>
 
-            <button className="flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-full shadow-md transition-transform transform hover:scale-105 w-full sm:w-auto">
+            <button
+              className="flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-full shadow-md transition-transform transform hover:scale-105 w-full sm:w-auto"
+              onClick={() => handleAddToCrunchylist(anime)}>
               <FaPlus className="mr-2" size={20} /> Añadir a CrunchyLista
             </button>
           </div>
         </div>
+        <ModalCrunchylists
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          lists={lists}
+          onSelectList={handleAddToList}
+          onCreateNewList={handleCreateNewList}
+          selectedAnime={selectedAnime}
+        />
 
         <div className="lg:w-1/3 mt-8 lg:mt-0">
           <div className="relative group">

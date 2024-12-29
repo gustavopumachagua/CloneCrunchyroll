@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { useAuth } from "../context/AuthContext"; // Importa el contexto
+import { useAuth } from "../context/AuthContext";
 
 const AccederPage = () => {
   const [email, setEmail] = useState("");
@@ -11,34 +11,30 @@ const AccederPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const { setIsAuthenticated, setUser } = useAuth(); // Obtén funciones del contexto
+  const { setIsAuthenticated, setUser } = useAuth();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Evita la recarga de página
+    e.preventDefault();
 
     try {
-      // Llama al backend con los datos del formulario
       const response = await axios.post(
-        "http://localhost:5005/api/users/login",
+        "https://backendclonecrunchyroll.onrender.com/api/users/login",
         {
           email,
           password,
         }
       );
 
-      // Almacena el token en localStorage
       const { token, user } = response.data;
       localStorage.setItem("token", token);
 
-      // Actualiza el estado global del contexto
       setIsAuthenticated(true);
       setUser(user);
 
-      // Redirige a la página principal o dashboard
       navigate("/");
     } catch (err) {
       console.error(err);
@@ -51,11 +47,9 @@ const AccederPage = () => {
       <div className="w-full max-w-md bg-gray-900 rounded-lg shadow-lg p-6">
         <h1 className="text-2xl font-bold text-center mb-6">Acceder</h1>
 
-        {/* Muestra mensaje de error si existe */}
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
         <form onSubmit={handleSubmit}>
-          {/* Email */}
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium mb-2">
               Dirección de email
@@ -71,7 +65,6 @@ const AccederPage = () => {
             />
           </div>
 
-          {/* Password con opción de mostrar/ocultar */}
           <div className="mb-4 relative">
             <label
               htmlFor="password"
@@ -87,7 +80,7 @@ const AccederPage = () => {
               placeholder="Introduce tu contraseña"
               required
             />
-            {/* Icono de mostrar/ocultar */}
+
             <span
               className="absolute right-3 top-11 cursor-pointer text-gray-500 hover:text-orange-500"
               onClick={() => setShowPassword(!showPassword)}>
@@ -106,7 +99,6 @@ const AccederPage = () => {
             </p>
           </div>
 
-          {/* Botón de acceder */}
           <button
             type="submit"
             className="w-full bg-orange-500 text-black font-bold py-2 rounded-lg hover:bg-orange-600 transition">
@@ -114,7 +106,6 @@ const AccederPage = () => {
           </button>
         </form>
 
-        {/* Link para crear cuenta */}
         <p className="text-center text-sm text-gray-400 mt-6">
           ¿No tienes cuenta?{" "}
           <Link

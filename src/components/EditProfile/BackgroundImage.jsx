@@ -1,13 +1,22 @@
 import { FiEdit2 } from "react-icons/fi";
 import PropTypes from "prop-types";
 
+const MAX_FILE_SIZE = 2 * 1024 * 1024;
+
 const BackgroundImage = ({ backgroundImage, setBackgroundImage }) => {
   const handleBackgroundChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        alert(
+          "La imagen es demasiado pesada. Por favor, selecciona una imagen menor a 2 MB."
+        );
+        return;
+      }
+
       const reader = new FileReader();
       reader.onloadend = () => {
-        setBackgroundImage(reader.result); // Base64 string
+        setBackgroundImage(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -15,7 +24,6 @@ const BackgroundImage = ({ backgroundImage, setBackgroundImage }) => {
 
   return (
     <div className="relative h-40 md:h-48">
-      {/* Imagen de fondo como <img> */}
       {backgroundImage && (
         <img
           src={backgroundImage}

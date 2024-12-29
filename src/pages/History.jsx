@@ -1,10 +1,18 @@
 import { useHistory } from "../context/HistoryContext";
 import { FaTrashAlt, FaCalendarAlt, FaRedoAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const History = () => {
-  const { history, removeFromHistory, clearHistory } = useHistory();
+  const { history, removeFromHistory, clearHistory, refreshHistory, loading } =
+    useHistory();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (history.length === 0) {
+      refreshHistory();
+    }
+  }, [history, refreshHistory]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -23,14 +31,21 @@ const History = () => {
       state: {
         episode: item,
         animeImage: item.animeImage,
-        episodes: history, // Enviar el historial como una lista de episodios
+        episodes: history,
       },
     });
   };
 
+  if (loading) {
+    return (
+      <div className="history bg-gray-900 text-white p-6">
+        <h2 className="text-center">Cargando historial...</h2>
+      </div>
+    );
+  }
+
   return (
     <div className="history bg-gray-900 text-white p-6">
-      {/* Encabezado */}
       <div className="flex justify-end mb-6">
         {history.length > 0 && (
           <button
@@ -42,7 +57,6 @@ const History = () => {
         )}
       </div>
 
-      {/* Contenido */}
       {history.length === 0 ? (
         <div className="text-center mt-10">
           <h2 className="text-white text-lg">
@@ -56,26 +70,24 @@ const History = () => {
               key={item.mal_id}
               onClick={() => handleCardClick(item)}
               className="bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col relative p-4 cursor-pointer hover:bg-gray-700 transition">
-              {/* Imagen con ícono de recarga */}
               <div className="relative">
                 <img
                   src={item.animeImage || "/default-image.jpg"}
                   alt={item.title}
                   className="w-full h-40 object-cover rounded shadow-lg"
                 />
-                {/* Sombra oscura */}
-                <div className="absolute inset-0 bg-black bg-opacity-80 rounded">
+
+                <div className="absolute inset-0 bg-black bg-opacity-60 rounded">
                   <div className="absolute inset-0 flex items-center justify-center">
                     <FaRedoAlt className="text-white text-3xl" />
                   </div>
                 </div>
-                {/* Etiqueta "Visto" */}
+
                 <div className="absolute bottom-2 right-2 bg-orange-500 text-white text-sm px-2 py-1 rounded shadow-lg">
                   Visto
                 </div>
               </div>
 
-              {/* Información del episodio */}
               <div className="mt-4 flex flex-col flex-grow">
                 <h3 className="text-base font-semibold text-orange-500 mb-2">
                   Episodio {item.episodeNumber}: {item.title}
@@ -86,7 +98,7 @@ const History = () => {
                 </p>
                 <button
                   onClick={(e) => {
-                    e.stopPropagation(); // Evitar que el clic en el botón propague el evento al contenedor
+                    e.stopPropagation();
                     removeFromHistory(item.mal_id);
                   }}
                   className="mt-auto flex items-center justify-center px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-all">

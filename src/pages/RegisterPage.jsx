@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Importa useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useAuth } from "../context/AuthContext";
 const RegisterPage = () => {
@@ -8,7 +8,7 @@ const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const navigate = useNavigate(); // Inicializa useNavigate
+  const navigate = useNavigate();
   const { setIsAuthenticated, setUser } = useAuth();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,25 +33,27 @@ const RegisterPage = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5005/api/users/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await fetch(
+        "https://backendclonecrunchyroll.onrender.com/api/users/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
 
-        // Guarda el token en localStorage
         localStorage.setItem("token", data.token);
         setIsAuthenticated(true);
         setUser(data.user);
         setSuccess("Cuenta creada exitosamente.");
         setTimeout(() => {
-          navigate("/"); // Redirige al usuario a la página principal
-        }, 1000); // Opción: espera 1 segundo para mostrar el mensaje de éxito
+          navigate("/");
+        }, 1000);
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Error al crear la cuenta.");
