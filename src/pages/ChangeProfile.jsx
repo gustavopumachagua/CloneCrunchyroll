@@ -14,7 +14,6 @@ const ChangeProfile = () => {
   const [message, setMessage] = useState(null);
   const [selectedProfileId, setSelectedProfileId] = useState(null);
 
-  // Fetch initial profiles
   useEffect(() => {
     const fetchProfiles = async () => {
       const token = localStorage.getItem("token");

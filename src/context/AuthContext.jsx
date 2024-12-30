@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
-        setUser(data.user); // Actualiza el estado del usuario
+        setUser(data.user);
         return { success: true, message: "Perfil actualizado exitosamente" };
       } else {
         const errorData = await response.json();

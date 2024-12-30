@@ -11,14 +11,11 @@ const ModalCrunchylists = ({
 }) => {
   useEffect(() => {
     if (isOpen) {
-      // Desactiva el scroll
       document.body.style.overflow = "hidden";
     } else {
-      // Reactiva el scroll
       document.body.style.overflow = "";
     }
 
-    // Limpieza para garantizar que el scroll se restaure al desmontar
     return () => {
       document.body.style.overflow = "";
     };

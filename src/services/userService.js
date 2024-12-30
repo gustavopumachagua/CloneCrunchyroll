@@ -5,11 +5,14 @@ export const getUserData = async () => {
   if (!token) return null;
 
   try {
-    const response = await axios.get("/api/users/profile", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      "https://backendclonecrunchyroll.onrender.com/api/users/profile",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("No se pudo obtener el perfil del usuario", error);
